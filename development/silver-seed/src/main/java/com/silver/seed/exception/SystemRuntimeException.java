@@ -7,38 +7,37 @@ import com.silver.seed.exception.CodeException;
  * CheckedException异常，如SQLException，IOException，使用本异常或本异常的子类进行封装，然后抛出。
  * 这样在各个调用层次上，无需再进行捕获或显示抛出。可以在一个统一的层次再进行处理，比如View层。
  * 
- * @author liaojian
+ * @author Liaojian
  *
  */
 @SuppressWarnings("serial")
-public class SystemRuntimeException extends RuntimeException implements CodeException{
+public class SystemRuntimeException extends RuntimeException {
 	/**
 	 * 错误代码
 	 */
-	private String code;
+//	private String code;        
 	/**
 	 * 默认构造函数 
 	 */
 	public SystemRuntimeException() {		
 	}
 	/**
-	 * 需要错误代码参数的构造函数
-	 * @param code
-	 * 		异常的错误代码
+	 * 需要异常信息参数的构造函数
+	 * @param message
+	 * 	异常信息
 	 */
-	public SystemRuntimeException(String code) {
-		this.code = code;
+	public SystemRuntimeException(String message) {
+		super(message);
 	}
 	/**
-	 * 带有错误代码、原因异常的构造函数
-	 * @param code
+	 * 带有异常信息、原因异常的构造函数
+	 * @param message
 	 * 		异常的错误代码
 	 * @param cause
 	 * 		原因异常
 	 */
-	public SystemRuntimeException(String code, Throwable cause) {
-		super(cause);
-		this.code = code;
+	public SystemRuntimeException(String message, Throwable cause) {
+		super(message, cause);		
 	}
 	/**
 	 * 需要原因异常的构造函数
@@ -47,13 +46,5 @@ public class SystemRuntimeException extends RuntimeException implements CodeExce
 	 */
 	public SystemRuntimeException(Throwable cause) {
 		super(cause);
-	}
-	
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
+	}                		
 }

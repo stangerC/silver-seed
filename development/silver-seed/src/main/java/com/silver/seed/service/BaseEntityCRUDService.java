@@ -1,38 +1,38 @@
 package com.silver.seed.service;
 
-import com.silver.seed.dao.hibernate.DAO;
+import com.silver.seed.dao.CrudDao;
 import com.silver.seed.entity.Entity;
 import java.io.Serializable;
 
-public abstract class BaseEntityCRUDService<T extends Entity, E extends DAO<T>> 
-	implements EntityCRUDService<T> {
-	private E entityDAO;
+public abstract class BaseEntityCRUDService<T extends Entity, ID extends Serializable, E extends CrudDao<T, ID>> 
+	implements EntityCRUDService<T, ID> {
+	private E entityDao;
 
 	public E getEntityDAO() {
-		return entityDAO;
+		return entityDao;
 	}
 
 	public void setEntityDAO(E entityDAO) {
-		this.entityDAO = entityDAO;
+		this.entityDao = entityDAO;
 	}	
 	
-	public T get(Serializable id) {		
-		return entityDAO.get(id);
+	public T retrieve(ID id) {		
+		return entityDao.retrieve(id);
 	}
 	
-	public void save(T entity) {
-		entityDAO.save(entity);
+	public void create(T entity) {
+		entityDao.create(entity);
 	}
 	
 	public void update(T entity) {
-		entityDAO.update(entity);
+		entityDao.update(entity);
 	}
 	
-	public void delete(Serializable id) {
-		entityDAO.delete(id);
+	public void delete(ID id) {
+		entityDao.delete(id);
 	}
 	
 	public void delete(T entity) {
-		entityDAO.delete(entity);
+		entityDao.delete(entity);
 	}
 }

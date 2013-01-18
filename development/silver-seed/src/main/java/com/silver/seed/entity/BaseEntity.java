@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 /**
  *
- * @author player
+ * @author Liaojian
  */
 public abstract class BaseEntity implements Entity{
     private String operator;
