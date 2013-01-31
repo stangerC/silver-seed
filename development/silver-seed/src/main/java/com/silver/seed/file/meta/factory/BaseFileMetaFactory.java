@@ -1,6 +1,6 @@
 package com.silver.seed.file.meta.factory;
 
-import com.silver.seed.exception.SystemRuntimeException;
+import com.silver.seed.exception.CodeRuntimeException;
 import com.silver.seed.file.meta.FileMeta;
 import com.silver.seed.pattern.factory.VariableFactory;
 import java.lang.reflect.ParameterizedType;
@@ -20,9 +20,9 @@ public abstract class BaseFileMetaFactory<T extends FileMeta, V extends String> 
         try {
             fileMeta = fileMetaClass.newInstance();
         } catch (InstantiationException ex) {
-            throw new SystemRuntimeException(ex);
+            throw new CodeRuntimeException(ex);
         } catch (IllegalAccessException ex) {
-            throw new SystemRuntimeException(ex);
+            throw new CodeRuntimeException(ex);
         }
         
         return fileMeta;

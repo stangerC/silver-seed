@@ -1,6 +1,6 @@
 package com.silver.seed.file.meta.factory;
 
-import com.silver.seed.exception.SystemRuntimeException;
+import com.silver.seed.exception.CodeRuntimeException;
 import com.silver.seed.file.meta.SimpleFileMeta;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -70,7 +70,7 @@ public class SimpleFileMetaFactory extends BaseFileMetaFactory<SimpleFileMeta, S
                     simpleFileMeta.setPath(directoryBuilder.append(
                             new String(simpleFileMeta.getName().getBytes(), "ISO-8859-1")).toString());
                 } catch (UnsupportedEncodingException ex) {
-                    throw new SystemRuntimeException(ex);
+                    throw new CodeRuntimeException(ex);
                 }
                 break;
         }        

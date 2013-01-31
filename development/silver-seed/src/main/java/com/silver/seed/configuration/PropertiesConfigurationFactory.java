@@ -1,6 +1,6 @@
 package com.silver.seed.configuration;
 
-import com.silver.seed.exception.SystemRuntimeException;
+import com.silver.seed.exception.CodeRuntimeException;
 import com.silver.seed.pattern.factory.VariableFactory;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class PropertiesConfigurationFactory implements VariableFactory<Propertie
             try {
                 configuration = new PropertiesConfiguration(propertiesFilePath);
             } catch (ConfigurationException ex) {
-                throw new SystemRuntimeException(ex);
+                throw new CodeRuntimeException(ex);
             }
             map.put(propertiesFilePath, configuration);
         }

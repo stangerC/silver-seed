@@ -11,7 +11,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 
 /**
- *
+ * JPA的基础DAO类。不要与spring一起使用，要采用JTA的方式 
  * @author Liaojian
  */
 public abstract class BaseJpaDao<T extends Entity, ID extends Serializable> implements CrudDao<T, ID> {         

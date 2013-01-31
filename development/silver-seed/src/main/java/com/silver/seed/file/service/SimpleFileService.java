@@ -4,7 +4,7 @@
  */
 package com.silver.seed.file.service;
 
-import com.silver.seed.exception.SystemRuntimeException;
+import com.silver.seed.exception.CodeRuntimeException;
 import com.silver.seed.file.meta.FileMeta;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,14 +27,14 @@ public class SimpleFileService {
             File directory = new File(fileMeta.getDirectory());
             if(!directory.exists()) {
                 if(!directory.mkdirs()) {
-                    throw new SystemRuntimeException("create directory " + fileMeta.getDirectory() +  " failed!");
+                    throw new CodeRuntimeException("create directory " + fileMeta.getDirectory() +  " failed!");
                 }
             }
             
             File file = new File(fileMeta.getPath());
             if(!file.exists()) {
                 if(!file.createNewFile()) {
-                    throw new SystemRuntimeException("create file" + fileMeta.getPath() + " failed!");
+                    throw new CodeRuntimeException("create file" + fileMeta.getPath() + " failed!");
                 }
             }            
             
@@ -44,7 +44,7 @@ public class SimpleFileService {
             fos.write(bytes);                
         } catch (IOException ex) { 
             logger.error(null, ex);            
-            throw new SystemRuntimeException(ex);
+            throw new CodeRuntimeException(ex);
         } finally {
             try {                
                 if(fos != null) {
@@ -52,7 +52,7 @@ public class SimpleFileService {
                 }
             } catch (IOException ex) {
                 logger.error(null, ex);
-                throw new SystemRuntimeException(ex);
+                throw new CodeRuntimeException(ex);
             }
         }                
     }

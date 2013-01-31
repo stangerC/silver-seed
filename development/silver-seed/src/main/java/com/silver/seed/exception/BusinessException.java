@@ -7,11 +7,11 @@ package com.silver.seed.exception;
  * @author liaojian
  */
 @SuppressWarnings("serial")
-public class BusinessException extends Exception implements CodeException{
+public class BusinessException extends Exception {
 	/**
 	 * 错误代码
 	 */
-	private String code;		
+	private ErrorCode errorCode;		
 	/**
 	 * 默认构造函数 
 	 */
@@ -19,22 +19,22 @@ public class BusinessException extends Exception implements CodeException{
 	}
 	/**
 	 * 需要错误代码参数的构造函数
-	 * @param code
+	 * @param errorCode
 	 * 		异常的错误代码
 	 */
-	public BusinessException(String code) {
-		this.code = code;
+	public BusinessException(ErrorCode errorCode) {
+		this.errorCode = errorCode;
 	}
 	/**
 	 * 带有错误代码、原因异常的构造函数
-	 * @param code
+	 * @param errorCode
 	 * 		异常的错误代码
 	 * @param cause
 	 * 		原因异常
 	 */
-	public BusinessException(String code, Throwable cause) {
+	public BusinessException(ErrorCode errorCode, Throwable cause) {
 		super(cause);
-		this.code = code;		
+		this.errorCode = errorCode;		
 	}
 	
 	/**
@@ -46,11 +46,11 @@ public class BusinessException extends Exception implements CodeException{
 		super(cause);
 	}
 		
-	public String getCode() {		
-		return code;
+	public ErrorCode getErrorCode() {		
+		return errorCode;
 	}
 	
-	public void setCode(String code) {
-		this.code = code;
+	public void setErrorCode(ErrorCode errorCode) {
+		this.errorCode = errorCode;
 	}	
 }
