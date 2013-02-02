@@ -66,5 +66,10 @@
       <artifactId>commons-configuration</artifactId>
       <version>1.9</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.maven.surefire</groupId>
+      <artifactId>surefire-booter</artifactId>
+      <version>2.10</version>
+    </dependency>
   </dependencies>
 </project>
