@@ -9,3 +9,8 @@
 /development/silver-seed/silver-seed-query-parent/.settings/
 /development/silver-seed/silver-seed-query-parent/silver-seed-query-showcase/.classpath
 /development/silver-seed/silver-seed-query-parent/silver-seed-query-showcase/.project
+*.class
+*.jar
+*.war
+*.ear
+
