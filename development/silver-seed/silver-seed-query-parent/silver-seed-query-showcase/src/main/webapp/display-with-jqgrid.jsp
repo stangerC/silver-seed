@@ -1,7 +1,7 @@
 <%-- 
     Document   : display-with-jqgrid
     Created on : May 10, 2013, 11:04:46 AM
-    Author     : CN085910
+    Author     : Liaojian
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,15 +14,15 @@
         <link rel="stylesheet" type="text/css" media="screen" 
               href="common/js/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css"/>
 
-        <script src="common/js/jqgrid-4.4.5/js/jquery-1.9.0.min.js" type="text/javascript"></script>
-        <script src="common/js/jqgrid-4.4.5/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+        <script src="common/js/jqgrid-4.4.5/js/jquery-1.9.0.js" type="text/javascript"></script>
+        <script src="common/js/jqgrid-4.4.5/js/jquery.jqGrid.src.js" type="text/javascript"></script>
         <script src="common/js/jqgrid-4.4.5/js/i18n/grid.locale-cn.js" type="text/javascript"></script>
         <script type="text/javascript">
             $(function(){ 
                 $("#list").jqGrid({
                     url:'DataServlet',
-                    datatype: 'xml',
-                    mtype: 'GET',
+                    datatype: 'json',
+                    mtype: 'POST',
                     colNames:['name','red', 'green','blue','alpha','Notes'],
                     colModel :[ 
                         {name:'name', index:'name', width:60}, 

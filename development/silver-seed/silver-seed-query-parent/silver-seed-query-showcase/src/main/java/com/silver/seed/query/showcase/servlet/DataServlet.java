@@ -1,9 +1,12 @@
 package com.silver.seed.query.showcase.servlet;
 
 import com.alibaba.fastjson.JSON;
+import com.silver.seed.query.showcase.entity.Customer;
+import com.silver.seed.query.showcase.repository.CustomerRepository;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.ServletException;
@@ -11,14 +14,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ServiceLocatorFactoryBean;
 
 /**
  *
  * @author Liaojian
  */
-@WebServlet(name = "DataServlet", urlPatterns = {"/DataServlet"})
 public class DataServlet extends HttpServlet {
-
+    
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -31,9 +35,12 @@ public class DataServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         try {
+            
+//            List<Customer> customers = customerRepository.findAll();
+//            System.out.println("size:" + customers.size());
             /* TODO output your page here. You may use following sample code. */
             Map parameters = request.getParameterMap();
             Set keys = parameters.keySet();
@@ -43,14 +50,9 @@ public class DataServlet extends HttpServlet {
             
             System.out.println(JSON.toJSONString(Color.BLUE));
             
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DataServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DataServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            out.println(JSON.toJSONString(Color.RED));
+            
+            
         } finally {            
             out.close();
         }
