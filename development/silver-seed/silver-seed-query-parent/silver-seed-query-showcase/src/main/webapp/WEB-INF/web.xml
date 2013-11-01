@@ -10,8 +10,8 @@
         </session-timeout>
     </session-config>
     <context-param>
-        <param-name>contextClass</param-name>
-        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/**/application.xml</param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

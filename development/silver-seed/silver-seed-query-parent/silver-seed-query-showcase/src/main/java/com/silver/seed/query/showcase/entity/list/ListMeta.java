@@ -1,5 +1,5 @@
 
-package com.silver.seed.query.showcase.entity;
+package com.silver.seed.query.showcase.entity.list;
 
 import com.silver.seed.paging.Paging;
 import java.util.List;

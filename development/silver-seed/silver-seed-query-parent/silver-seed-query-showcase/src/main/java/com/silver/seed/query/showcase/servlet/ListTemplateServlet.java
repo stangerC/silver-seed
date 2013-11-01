@@ -1,6 +1,6 @@
 package com.silver.seed.query.showcase.servlet;
 
-import com.silver.seed.query.showcase.entity.ListMeta;
+import com.silver.seed.query.showcase.entity.list.ListMeta;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;

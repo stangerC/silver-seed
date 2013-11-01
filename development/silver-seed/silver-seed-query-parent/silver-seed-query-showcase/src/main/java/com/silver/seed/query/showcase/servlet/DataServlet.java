@@ -3,6 +3,7 @@ package com.silver.seed.query.showcase.servlet;
 import com.alibaba.fastjson.JSON;
 import com.silver.seed.query.showcase.entity.Customer;
 import com.silver.seed.query.showcase.repository.CustomerRepository;
+import com.silver.seed.query.showcase.service.CustomerService;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ServiceLocatorFactoryBean;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  *
@@ -49,6 +52,22 @@ public class DataServlet extends HttpServlet {
             }
             
             System.out.println(JSON.toJSONString(Color.BLUE));
+            WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(
+                    request.getServletContext());
+            
+            String[] names = ctx.getBeanDefinitionNames();
+            for(String name : names) {
+                System.out.println(name);
+            }
+            
+            CustomerService customerService = (CustomerService)ctx.getBean("customerService");
+            
+            
+            List<Customer> customers = customerService.getAll();
+            
+            for(Customer customer : customers) {
+                System.out.println("customer:" + customer.getName());
+            }
             
             out.println(JSON.toJSONString(Color.RED));
             
