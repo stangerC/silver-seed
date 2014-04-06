@@ -10,7 +10,5 @@
   <artifactId>silver-seed-query-parent</artifactId>
   <packaging>pom</packaging>
   <name>silver-seed-query-parent</name>
-  <modules>
-    <module>silver-seed-query-showcase</module>
-  </modules>
+  <modules></modules>
 </project>

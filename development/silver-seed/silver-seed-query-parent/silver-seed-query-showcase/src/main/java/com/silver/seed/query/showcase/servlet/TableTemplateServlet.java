@@ -1,8 +1,10 @@
 package com.silver.seed.query.showcase.servlet;
 
-import com.silver.seed.query.showcase.entity.list.ListMeta;
+import com.silver.seed.query.entity.Column;
+import com.silver.seed.query.entity.TableMeta;
+import com.silver.seed.query.entity.ViewType;
+import com.silver.seed.query.showcase.entity.list.JqGridMeta;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Liaojian
  */
-public class ListTemplateServlet extends HttpServlet {
+public class TableTemplateServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -25,12 +27,34 @@ public class ListTemplateServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        ListMeta listMeta = new ListMeta();
+            throws ServletException, IOException {                       
+        JqGridMeta jqGridMeta = new JqGridMeta();
         
-        request.setAttribute("listMeta", listMeta);
+        Column column = new Column();
+        column.setName("name");
+        column.setIndex("name");
+        column.setWidth(300);        
+        jqGridMeta.addColumn(column);
         
-        request.getRequestDispatcher("list-template.jsp").forward(request, response);
+        column = new Column();
+        column.setName("phone");
+        column.setIndex("phone");
+        column.setWidth(300);
+        jqGridMeta.addColumn(column);
+        
+        jqGridMeta.setCaption("Customer Info");
+        jqGridMeta.setDataType("json");
+        jqGridMeta.setUrl("DataServlet");
+        jqGridMeta.setMtype("POST");
+                
+        request.setAttribute("jqGridMeta", jqGridMeta);
+        
+        TableMeta<JqGridMeta> tableMeta = new TableMeta<JqGridMeta>(null, ViewType.JqGrid);        
+        tableMeta.setTitle("Customer Table");        
+        tableMeta.setViewMeta(jqGridMeta);
+        request.setAttribute("tableMeta", tableMeta);
+        
+        request.getRequestDispatcher("table-template.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -1,6 +1,9 @@
 package com.silver.seed.query.showcase.servlet;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
+import com.silver.seed.paging.Paging;
+import com.silver.seed.query.entity.jqgrid.JqGridData;
 import com.silver.seed.query.showcase.entity.Customer;
 import com.silver.seed.query.showcase.repository.CustomerRepository;
 import com.silver.seed.query.showcase.service.CustomerService;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ServiceLocatorFactoryBean;
+import org.springframework.data.domain.Page;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -40,38 +44,39 @@ public class DataServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
-        try {
-            
-//            List<Customer> customers = customerRepository.findAll();
-//            System.out.println("size:" + customers.size());
-            /* TODO output your page here. You may use following sample code. */
-            Map parameters = request.getParameterMap();
-            Set keys = parameters.keySet();
-            for(Object key : keys) {
-                System.out.println(String.format("key:[%s], value:[%s]", key, parameters.get(key)));
+        
+        Paging paging = new Paging();
+        
+        Map<String, String[]> parameters =  request.getParameterMap();
+        Set<String> keySet = parameters.keySet();
+        for(String key : keySet) {            
+            String value = request.getParameter(key);
+            System.out.println(String.format("key:[%s];value:[%s]", key, value));
+            if("rows".equals(key)) {
+                paging.setPageSize(Integer.parseInt(value));
             }
-            
-            System.out.println(JSON.toJSONString(Color.BLUE));
+            if("page".equals(key)) {
+                paging.setPageNumber(Integer.parseInt(value));
+            }
+        }
+        
+        try {            
             WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(
                     request.getServletContext());
             
-            String[] names = ctx.getBeanDefinitionNames();
-            for(String name : names) {
-                System.out.println(name);
-            }
+            String[] names = ctx.getBeanDefinitionNames();            
+            CustomerService customerService = (CustomerService)ctx.getBean("customerService");                                                                              
             
-            CustomerService customerService = (CustomerService)ctx.getBean("customerService");
+            Page<Customer> page = customerService.getAll(paging);
+            JqGridData data = new JqGridData(page, new String[]{"name", "phone"}, JqGridData.INCLUDES);  
             
+//            List<Customer> customers = page.getContent();            
+//            JqGridData data = new JqGridData(customers, new String[]{"name", "phone"}, JqGridData.INCLUDES, 10, 1);                        
             
-            List<Customer> customers = customerService.getAll();
+            data.toJsonString();
             
-            for(Customer customer : customers) {
-                System.out.println("customer:" + customer.getName());
-            }
-            
-            out.println(JSON.toJSONString(Color.RED));
-            
-            
+            System.out.println(data.toJsonString());    
+            out.println(data.toJsonString());                        
         } finally {            
             out.close();
         }

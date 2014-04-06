@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>${pageTitle}</title>
+        <title>${tableMeta.title}</title>
         <link rel="stylesheet" type="text/css" media="screen" href="common/js/jqgrid-4.4.5/css/ui.jqgrid.css"/>
         <link rel="stylesheet" type="text/css" media="screen" 
               href="common/js/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css"/>
@@ -14,15 +14,15 @@
         <script type="text/javascript">
             $(function(){ 
                 $("#list").jqGrid({
-                    url:'DataServlet',
-                    datatype: 'json',
-                    mtype: 'POST',
-                    colNames:[${listMeta.colNames}],
+                    url:'${tableMeta.viewMeta.url}',
+                    datatype: '${tableMeta.viewMeta.dataType}',
+                    mtype: '${tableMeta.viewMeta.mtype}',
+                    colNames:[${tableMeta.viewMeta.colNames}],
                     colModel :[ 
-                        ${listMeta.getColModel}
+                        ${tableMeta.viewMeta.colModel}
                     ],
                     jsonReader : {
-                        root: "rows",
+                        root: "data",
                         page: "page",
                         total: "total",
                         records: "records",
@@ -30,7 +30,7 @@
                         cell: "cell",
                         id: "id",
                         userdata: "userdata",
-                        subgrid: {root:"rows", 
+                        subgrid: {root:"data", 
                             repeatitems: true, 
                             cell:"cell"
                         } 
@@ -42,7 +42,7 @@
                     sortorder: 'desc',
                     viewrecords: true,
                     gridview: true,
-                    caption: 'Color Grid'
+                    caption: '${tableMeta.viewMeta.caption}'
                 }); 
             }); 
         </script>

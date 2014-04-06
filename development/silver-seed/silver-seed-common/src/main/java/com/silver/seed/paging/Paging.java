@@ -4,13 +4,13 @@ package com.silver.seed.paging;
  * 分页对象
  * @author Liaojian
  */
-public class Paging {   
-    
-    private int pageCount;
+public class Paging {       
     
     private int pageNumber;
     
     private int pageSize;        
+    
+    private long rows;
     
     private int[] enablePageSize;
     
@@ -25,17 +25,8 @@ public class Paging {
     }
 
     public int getPageCount() {
-        return pageCount;
-    }
-
-    public void setPageCount(int pageCount) {
-        if(pageCount < 0) {
-            this.pageCount = 0;
-        }
-        else {
-            this.pageCount = pageCount;
-        }
-    }
+        return (int)(rows % pageSize == 0 ? rows / pageSize : rows / pageSize + 1);
+    }    
 
     public int getPageNumber() {
         return pageNumber;
@@ -68,5 +59,13 @@ public class Paging {
 
     public void setEnablePageSize(int[] enablePageSize) {
         this.enablePageSize = enablePageSize;
+    }  
+
+    public long getRows() {
+        return rows;
+    }
+
+    public void setRows(long rows) {
+        this.rows = rows;
     }        
 }

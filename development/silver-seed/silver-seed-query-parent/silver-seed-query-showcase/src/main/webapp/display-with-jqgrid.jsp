@@ -23,14 +23,10 @@
                     url:'DataServlet',
                     datatype: 'json',
                     mtype: 'POST',
-                    colNames:['name','red', 'green','blue','alpha','Notes'],
+                    colNames:['name','phone'],
                     colModel :[ 
-                        {name:'name', index:'name', width:60}, 
-                        {name:'red', index:'red', width:90}, 
-                        {name:'green', index:'green', width:80, align:'right'}, 
-                        {name:'blue', index:'blue', width:80, align:'right'}, 
-                        {name:'hex', index:'hex', width:80, align:'right'}, 
-                        {name:'note', index:'note', width:150, sortable:false} 
+                        {name:'name', index:'name', width:200},
+                        {name:'phone', index:'phone', width:200}
                     ],
                     jsonReader : {
                         root: "rows",

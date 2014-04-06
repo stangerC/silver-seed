@@ -26,6 +26,5 @@
     </bean> 
     
     <jpa:repositories base-package="com.silver.seed.query.showcase.repository"/> 
-    
-    
+        
 </beans>
