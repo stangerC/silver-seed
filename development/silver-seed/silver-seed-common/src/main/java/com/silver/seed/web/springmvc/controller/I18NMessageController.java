@@ -6,11 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-public abstract class I18NContronller {
-	
-	public static final String MESSAGE_ERROR = "message.error";
-	
-	public static final String MESSAGE_INFO = "message.info";
+public abstract class I18NMessageController {	
 	
 	private MessageSource messageSource;
 

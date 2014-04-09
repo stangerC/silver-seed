@@ -1,16 +1,14 @@
 package com.silver.seed.configuration;
 
-import com.silver.seed.pattern.factory.VariableFactory;
-import com.silver.wheel.lang.exception.CodedRuntimeException;
-import java.io.IOException;
 import java.net.URL;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+
+import com.silver.wheel.common.pattern.factory.VariableFactory;
+import com.silver.wheel.common.exception.CodedRuntimeException;
 
 /**
  * 属性文件配置工厂类。用于创建、存储属性文件配置。
