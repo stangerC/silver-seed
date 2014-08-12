@@ -1,7 +1,6 @@
 package com.silver.seed.configuration.wrapper;
 
 import com.silver.seed.configuration.descriptor.ConfigurationDescriptor;
-
 import org.apache.commons.configuration.Configuration;
 
 /**

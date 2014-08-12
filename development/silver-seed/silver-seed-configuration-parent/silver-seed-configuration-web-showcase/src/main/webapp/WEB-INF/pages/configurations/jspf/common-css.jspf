@@ -1,0 +1,5 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<link href="${ctx}/styles/bootstrap/bootstrap-3.1.1/css/bootstrap.css" rel="stylesheet">
+<link href="${ctx}/styles/dashboard/dashboard.css" rel="stylesheet">

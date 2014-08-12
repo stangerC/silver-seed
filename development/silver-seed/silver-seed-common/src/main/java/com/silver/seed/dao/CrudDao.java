@@ -1,6 +1,6 @@
 package com.silver.seed.dao;
 
-import com.silver.seed.entity.Entity;
+import com.silver.seed.common.entity.Entity;
 import java.io.Serializable;
 import java.util.Collection;
 

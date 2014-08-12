@@ -1,7 +1,7 @@
 package com.silver.seed.dao.hibernate;
 
 import com.silver.seed.dao.CrudDao;
-import com.silver.seed.entity.Entity;
+import com.silver.seed.common.entity.Entity;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;

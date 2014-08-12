@@ -1,7 +1,6 @@
 package com.silver.seed.configuration.builder;
 
 import com.silver.seed.configuration.descriptor.ConfigurationDescriptor;
-
 import org.apache.commons.configuration.builder.BuilderParameters;
 
 /**

@@ -5,7 +5,7 @@
 	<parent>
       <groupId>com.silver.seed</groupId>
       <artifactId>silver-seed-parent</artifactId>
-      <version>${silver.seed.version}</version>      
+      <version>0.0.2</version>      
   </parent>
 
   <artifactId>silver-seed-configuration-parent</artifactId>
@@ -19,5 +19,6 @@
   </properties>  
   <modules>
   	<module>silver-seed-configuration</module>
+  	<module>silver-seed-configuration-web-showcase</module>
   </modules>
 </project>

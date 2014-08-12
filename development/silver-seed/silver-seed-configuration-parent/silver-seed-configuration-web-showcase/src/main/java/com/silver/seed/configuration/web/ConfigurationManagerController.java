@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.silver.seed.configuration.ConfigurationService;
 import com.silver.seed.configuration.descriptor.ConfigurationDescriptor;
 import com.silver.seed.configuration.reopsitory.ConfigurationRepository;
-import com.silver.seed.web.springmvc.controller.I18NContronller;
+import com.silver.seed.common.web.springmvc.controller.HierarchicalMessageController;
+
+import javax.annotation.Resource;
 
 /**
  * 
@@ -27,26 +28,39 @@ import com.silver.seed.web.springmvc.controller.I18NContronller;
  */
 @Controller
 @RequestMapping(value = "/configurations")
-public class ConfigurationManagerController extends I18NContronller{
+public class ConfigurationManagerController extends HierarchicalMessageController {
 
-	@RequestMapping(method = RequestMethod.GET)
+    private ConfigurationRepository repository;
+
+    public ConfigurationRepository getRepository() {
+        return repository;
+    }
+
+    @Resource(name = "configurationRepository")
+    public void setRepository(ConfigurationRepository repository) {
+        this.repository = repository;
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
 	public String list(Model model) {
-		ConfigurationRepository repos = ConfigurationService.getBean(null);
-		List<ConfigurationDescriptor> descriptors = repos.getDescriptors();
+		List<ConfigurationDescriptor> descriptors = repository.getDescriptors();
 
-		model.addAttribute("descriptors", descriptors);						
-		
+		model.addAttribute("descriptors", descriptors);
+
 		return "configurations";
 	}
 
 	@RequestMapping(value = "new", method = RequestMethod.POST)
-	public void doCreate(String configName, String configPath, Model model)
-			throws ConfigurationException {
+	public void doCreate(
+			@RequestParam(value = "configName", required = true) String configName,
+			@RequestParam(value = "configPath", required = true) String configPath,
+			Model model) throws ConfigurationException {
 		URL url = Thread.currentThread().getContextClassLoader()
 				.getResource(configPath);
 
 		if (url == null) {
-			model.addAttribute(MESSAGE_ERROR, getMessage("message.error.configuration.path"));
+			addError("message.error.configuration.path", model);	
+			return;
 		}
 
 		PropertiesBuilderParametersImpl params = new PropertiesBuilderParametersImpl();
@@ -55,12 +69,10 @@ public class ConfigurationManagerController extends I18NContronller{
 		FileHandler handler = params.getFileHandler();
 		handler.setURL(url);
 
-		ConfigurationRepository repos = ConfigurationService
-				.getBean(configName);
-		repos.createConfiguration(configName, PropertiesConfiguration.class,
-				params);
-
-		model.addAttribute(MESSAGE_INFO, getMessage("message.success.common.create"));
+		repository.createConfiguration(configName, PropertiesConfiguration.class,
+                params);
+		
+		addSuccess("message.success.common.create", model);
 	}
 
 	@RequestMapping(value = "new", method = RequestMethod.GET)
@@ -70,11 +82,8 @@ public class ConfigurationManagerController extends I18NContronller{
 
 	@RequestMapping(value = "{configName}")
 	public String show(@PathVariable String configName, Model model) {
-		ConfigurationRepository repos = ConfigurationService
-				.getBean(configName);
-
-		ConfigurationDescriptor descriptor = repos.getDescriptor(configName);
-		Configuration configuration = repos.getConfiguration(configName);
+		ConfigurationDescriptor descriptor = repository.getDescriptor(configName);
+		Configuration configuration = repository.getConfiguration(configName);
 
 		model.addAttribute("descriptor", descriptor);
 		model.addAttribute("configuration", configuration);
@@ -85,37 +94,35 @@ public class ConfigurationManagerController extends I18NContronller{
 	@RequestMapping(value = "{configName}/property/{key}", method = RequestMethod.DELETE)
 	public void deleteProperty(@PathVariable String configName,
 			@PathVariable String key, Model model) {
-		ConfigurationRepository repos = ConfigurationService
-				.getBean(configName);
 
-		Configuration configuration = repos.getConfiguration(configName);
+		Configuration configuration = repository.getConfiguration(configName);
 		configuration.clearProperty(key);
-
-		model.addAttribute(MESSAGE_INFO, "message.success.common.delete");
+		
+		addSuccess("message.success.common.delete", model);
 	}
 
 	@RequestMapping(value = "{configName}/property/new", method = RequestMethod.POST)
 	public void createProperty(@PathVariable String configName,
-			@RequestParam(value="key", required=true) String key, @RequestParam(value="value", required=true) String value, Model model) {
-		ConfigurationRepository repos = ConfigurationService
-				.getBean(configName);
-		
-		if(key == null || "".equals(key.trim())) {
-			model.addAttribute(MESSAGE_ERROR, getMessage("message.error.property.keyIsNull"));
-			return;
-		}
-		
-		if(value == null || "".equals(value.trim())) {
-			model.addAttribute(MESSAGE_ERROR, getMessage("message.error.property.valueIsNull"));
+			@RequestParam(value = "key", required = true) String key,
+			@RequestParam(value = "value", required = true) String value,
+			Model model) {
+
+		if (key == null || "".equals(key.trim())) {
+			addError("message.error.property.keyIsNull", model);			
 			return;
 		}
 
-		Configuration configuration = repos.getConfiguration(configName);
-		configuration.addProperty(key, value);		
+		if (value == null || "".equals(value.trim())) {
+			addError("message.error.property.valueIsNull", model);			
+			return;
+		}
+
+		Configuration configuration = repository.getConfiguration(configName);
+		configuration.addProperty(key, value);
 		
-		model.addAttribute(MESSAGE_INFO, getMessage("message.success.common.create"));
+		addSuccess("message.success.common.create", model);		
 	}
-	
+
 	/**
 	 * 
 	 * @param configName
@@ -123,17 +130,24 @@ public class ConfigurationManagerController extends I18NContronller{
 	 * @param value
 	 * @param model
 	 */
-	@RequestMapping(value = "{configName}/property/{key}/update",  method = RequestMethod.POST)
+	@RequestMapping(value = "{configName}/property/{key}/update", method = RequestMethod.POST)
 	public void updateProperty(@PathVariable String configName,
-			@PathVariable String key,  @RequestParam(value="value", required=false) String value, Model model) {
-		if(value == null) {
-			model.addAttribute(MESSAGE_ERROR, getMessage("message.error.property.valueIsNull"));
+			@PathVariable String key,
+			@RequestParam(value = "value", required = false) String value,
+			Model model) {
+		if (value == null) {
+			addError("message.error.property.valueIsNull", model);			
 		}
-		ConfigurationRepository repos = ConfigurationService
-				.getBean(configName);
 
-		Configuration configuration = repos.getConfiguration(configName);
-		configuration.setProperty(key, value);		
-		model.addAttribute(MESSAGE_INFO, getMessage("message.success.common.update"));
-	}	
+		Configuration configuration = repository.getConfiguration(configName);
+		configuration.setProperty(key, value);
+		
+		addSuccess("message.success.common.update", model);		
+	}
+
+    @RequestMapping(value = "items", method = RequestMethod.GET)
+    public String items(Model model) {
+        model.addAttribute("repos", repository);
+        return "configurations.items";
+    }
 }

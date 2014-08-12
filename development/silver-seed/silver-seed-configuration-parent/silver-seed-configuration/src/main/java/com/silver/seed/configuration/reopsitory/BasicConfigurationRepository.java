@@ -8,18 +8,13 @@ import com.silver.seed.configuration.descriptor.ConfigurationDescriptor;
 import com.silver.seed.configuration.exception.ConfigurationErrorCode;
 import com.silver.seed.configuration.wrapper.ConfigurationWrapper;
 import com.silver.wheel.common.exception.CodedRuntimeException;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
-
 import org.apache.commons.configuration.CombinedConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.builder.BuilderParameters;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.*;
 
 /**
  *
@@ -32,7 +27,10 @@ public abstract class BasicConfigurationRepository {
     private CombinedConfiguration container = new CombinedConfiguration();
     
     private List<ConfigurationDescriptor> descriptors = new ArrayList<ConfigurationDescriptor>();
-    
+
+    /*
+    创建配置
+     */
     public  <T extends Configuration> T createConfiguration(String configName, Class<T> clazz, 
             BuilderParameters parameters) {   
         if (containsConfiguration(configName)) {
@@ -95,19 +93,25 @@ public abstract class BasicConfigurationRepository {
     }
 
     public Object getProperty(String key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return container.getProperty(key);
     }
 
     public Iterator<String> getKeys(String prefix) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Iterator<String> getKeys() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<String> getKeys() {
+        List<String> keys = new ArrayList<>();
+
+        Iterator<String> iterator = container.getKeys();
+        while(iterator.hasNext()) {
+            keys.add(iterator.next());
+        }
+        return  keys;
     }
 
     public Properties getProperties(String key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return container.getProperties(key);
     }
 
     public boolean getBoolean(String key) {
@@ -183,15 +187,15 @@ public abstract class BasicConfigurationRepository {
     }
 
     public short getShort(String key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return container.getShort(key);
     }
 
     public short getShort(String key, short defaultValue) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return container.getShort(key, defaultValue);
     }
 
     public Short getShort(String key, Short defaultValue) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return container.getShort(key, defaultValue);
     }
 
     public BigDecimal getBigDecimal(String key) {

@@ -2,13 +2,12 @@ package com.silver.seed.configuration.builder;
 
 import com.silver.seed.configuration.descriptor.ConfigurationDescriptor;
 import com.silver.wheel.common.exception.CodedRuntimeException;
-
-import java.util.Map;
-
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.builder.BuilderParameters;
 import org.apache.commons.configuration.builder.PropertiesBuilderParametersImpl;
 import org.apache.commons.configuration.builder.ReloadingFileBasedConfigurationBuilder;
+
+import java.util.Map;
 
 /**
  *

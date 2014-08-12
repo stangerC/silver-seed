@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="configurations.tiles.template" template="/WEB-INF/pages/configurations/jsp/layout.jsp">
+        <put-attribute name="title"/>
+        <put-attribute name="main"/>
+    </definition>
+    <definition name="configurations.new" extends="configurations.tiles.template">   
+        <put-attribute name="title" value="创建集对象"/>
+        <put-attribute name="main" value="/WEB-INF/pages/configurations/jspf/new.jspf" />
+    </definition>
+    <definition name="configurations" extends="configurations.tiles.template">   
+        <put-attribute name="title" value="配置集列表"/>
+        <put-attribute name="main" value="/WEB-INF/pages/configurations/jspf/list.jspf" />
+    </definition>
+    <definition name="configurations.show" extends="configurations.tiles.template">   
+        <put-attribute name="title" value="配置集信息"/>
+        <put-attribute name="main" value="/WEB-INF/pages/configurations/jspf/show.jspf" />
+    </definition>
+    <definition name="configurations.items" extends="configurations.tiles.template">
+        <put-attribute name="title" value="配置项信息"/>
+        <put-attribute name="main" value="/WEB-INF/pages/configurations/jspf/items.jspf" />
+    </definition>
+    <definition name="common.error" template="/WEB-INF/pages/common/jsp/error.jsp"/>
+</tiles-definitions>
