@@ -1,0 +1,10 @@
+*.class
+*.jar
+*.war
+*.ear
+/development/**/target/
+/development/**/.settings/
+.classpath
+.project
+/development/**/.idea/
+/development/**/angular-*/
