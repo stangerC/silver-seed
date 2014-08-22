@@ -8,3 +8,4 @@
 .project
 /development/**/.idea/
 /development/**/angular-*/
+*.iml
