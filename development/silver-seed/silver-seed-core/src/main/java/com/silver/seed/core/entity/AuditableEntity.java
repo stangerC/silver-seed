@@ -13,13 +13,13 @@ public abstract class AuditableEntity<U, ID extends Serializable> implements Ent
     /*状态，1为正常，9为无效或删除*/
     protected int status;
 
-    @OneToOne
+    @ManyToOne
     protected U createdBy;
 
     @Temporal(TemporalType.TIMESTAMP)
     protected Date createdDate;
 
-    @OneToOne
+    @ManyToOne
     protected U lastModifiedBy;
 
     @Temporal(TemporalType.TIMESTAMP)

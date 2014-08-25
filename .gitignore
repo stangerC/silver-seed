@@ -4,8 +4,8 @@
 *.ear
 /development/**/target/
 /development/**/.settings/
-.classpath
-.project
+*.classpath
+*.project
 /development/**/.idea/
 /development/**/angular-*/
 *.iml

@@ -11,7 +11,7 @@ public abstract class AuditableEntityCRUDService<T extends Entity, ID extends Se
 	public abstract E getRepository();
 
 	public T retrieve(ID id) {		
-		return getRepository().getOne(id);
+		return getRepository().findOne(id);
 	}
 	
 	public void create(T entity) {
