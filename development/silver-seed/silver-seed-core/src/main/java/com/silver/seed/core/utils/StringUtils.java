@@ -1,16 +1,4 @@
-package com.silver.seed.utils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.TreeSet;
+package com.silver.seed.core.utils;
 
 /**
  * 字符串工具类。主要引用了Spring的StringUtils类以及Apache Common包的StringUtils类。

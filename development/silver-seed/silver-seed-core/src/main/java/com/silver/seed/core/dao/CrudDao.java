@@ -1,4 +1,4 @@
-package com.silver.seed.dao;
+package com.silver.seed.core.dao;
 
 import com.silver.seed.core.entity.Entity;
 import java.io.Serializable;

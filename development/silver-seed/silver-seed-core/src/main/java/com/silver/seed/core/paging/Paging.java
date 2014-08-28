@@ -1,4 +1,4 @@
-package com.silver.seed.paging;
+package com.silver.seed.core.paging;
 
 /**
  * 分页对象

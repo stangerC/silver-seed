@@ -22,14 +22,14 @@ import java.util.*;
  */
 public abstract class BasicConfigurationRepository {
     /**
-     * 内置的CombinedConfiguration，作为所有配置对象的库。
+     * 内置的CombinedConfiguration，作为所有配置对象的容器。
      */
     private CombinedConfiguration container = new CombinedConfiguration();
     
     private List<ConfigurationDescriptor> descriptors = new ArrayList<ConfigurationDescriptor>();
 
-    /*
-    创建配置
+    /**
+     * 创建配置
      */
     public  <T extends Configuration> T createConfiguration(String configName, Class<T> clazz, 
             BuilderParameters parameters) {   
@@ -72,6 +72,10 @@ public abstract class BasicConfigurationRepository {
     protected abstract <T extends Configuration> ConfigurationWrapper<T> createConfigurationInternal(String configName, Class<T> clazz, 
             BuilderParameters parameters);
 
+    /**
+     * 检查配置库是否为空。
+     * @return
+     */
     public boolean isEmpty() {
         return container.isEmpty();
     }

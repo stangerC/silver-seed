@@ -7,6 +7,7 @@ import com.silver.seed.configuration.descriptor.ConfigurationDescriptor;
 import com.silver.seed.configuration.exception.ConfigurationErrorCode;
 import com.silver.seed.configuration.wrapper.ConfigurationWrapper;
 import com.silver.wheel.common.exception.CodedRuntimeException;
+import org.apache.commons.configuration.BaseConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.beanutils.BeanHelper;
@@ -24,8 +25,11 @@ import java.util.Map;
  *
  * @author Liaojian
  */
-public class ConfigurationRepository extends BasicConfigurationRepository{        
+public class ConfigurationRepository extends BasicConfigurationRepository{
 
+    /**
+     * 配置构建器容器，配置仓库用到builder会放到其中。
+     */
     private Map<Class<? extends Configuration>, BasicConfigurationBuilder> builders = new HashMap<>();
 
     public Map<Class<? extends Configuration>, BasicConfigurationBuilder> getBuilders() {
@@ -34,6 +38,14 @@ public class ConfigurationRepository extends BasicConfigurationRepository{
 
     public void setBuilders(Map<Class<? extends Configuration>, BasicConfigurationBuilder> builders) {
         this.builders = builders;
+    }
+
+    /**
+     * 添加构建器到仓库内部。如果配置的类型对应的构建器已经存在，则将会被替换掉。
+     * @param builder
+     */
+    public void addBuilder(BasicConfigurationBuilder builder) {
+        this.builders.put(builder.getResultClass(), builder);
     }
 
     public ConfigurationRepository() {
@@ -51,6 +63,9 @@ public class ConfigurationRepository extends BasicConfigurationRepository{
 
         if (builder != null) {
             try {
+
+                //调用reset方法，释放构建器上次创建的配置。如果不调用，那么getConfiguration方法将会返回上次
+                //创建的配置对象。
                 builder.reset();
                 builder.configure(parameters);
                 
@@ -75,7 +90,16 @@ public class ConfigurationRepository extends BasicConfigurationRepository{
         }
     }
             
-    
+    public PropertiesConfiguration createPropertiesConfiguration(String configName, String path) {
+        PropertiesBuilderParametersImpl parameters = new PropertiesBuilderParametersImpl();
+        parameters.setBeanHelper(BeanHelper.INSTANCE);
+
+        FileHandler handler = parameters.getFileHandler();
+        handler.setURL(Thread.currentThread().getContextClassLoader().getResource(path));
+
+        return createConfiguration(configName, PropertiesConfiguration.class, parameters);
+    }
+
     /*
     public Configuration updateConfiguration(String configName) {
         Configuration configuration = repository.getConfiguration(configName);
@@ -97,33 +121,5 @@ public class ConfigurationRepository extends BasicConfigurationRepository{
         return configMap;
     }
     */
-
-    public static void main(String[] args) throws IOException, ConfigurationException {                 
-        PropertiesBuilderParametersImpl params = new PropertiesBuilderParametersImpl();  
-        params.setBeanHelper(BeanHelper.INSTANCE);
-        
-        FileHandler handler = params.getFileHandler();   
-        handler.setURL(Thread.currentThread().getContextClassLoader().getResource("config/test/app.properties")); 
-
-        Map<Class<? extends Configuration>, BasicConfigurationBuilder> builders = new HashMap<>();
-        builders.put(PropertiesConfiguration.class, new PropertiesConfigurationBuilder(PropertiesConfiguration.class));
-        ConfigurationRepository repos = new ConfigurationRepository(builders);
-
-        PropertiesConfiguration config = repos.createConfiguration("app", PropertiesConfiguration.class, params);
-        System.out.println(config);
-        System.out.println(config.getString("app.name"));
-        
-        params = new PropertiesBuilderParametersImpl();  
-        params.setBeanHelper(BeanHelper.INSTANCE);
-        
-        handler = params.getFileHandler();   
-        handler.setURL(Thread.currentThread().getContextClassLoader().getResource("config/test/db.properties")); 
-        config = repos.createConfiguration("db", PropertiesConfiguration.class, params);
-        System.out.println(config);
-        System.out.println(config.getString("db.name"));
-        
-        System.out.println(repos.getString("db.type"));
-    }
-
     
 }

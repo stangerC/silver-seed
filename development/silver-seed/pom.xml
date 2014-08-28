@@ -38,7 +38,8 @@
 	</build>
 	<modules>
 		<module>silver-seed-parent</module>	
-		<module>silver-seed-core</module>			
+		<module>silver-seed-core</module>
+        <module>silver-seed-configuration/silver-seed-configuration</module>
 	</modules>
 	
 	<properties>
