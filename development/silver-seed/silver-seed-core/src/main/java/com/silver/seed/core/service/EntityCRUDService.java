@@ -6,7 +6,7 @@ import java.io.Serializable;
 public interface EntityCRUDService<T extends Entity, ID extends Serializable> {
 	public T retrieve(ID id);
 	
-	public void create(T entity);
+	public T create(T entity);
 	
 	public void update(T entity);
 	
