@@ -1,20 +1,24 @@
 package com.silver.seed.configuration.reopsitory;
 
+/*
 import com.silver.seed.configuration.builder.PropertiesConfigurationBuilder;
-import junit.framework.TestCase;
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.io.FileHandler;
 import org.apache.commons.configuration.beanutils.BeanHelper;
 import org.apache.commons.configuration.builder.BasicConfigurationBuilder;
 import org.apache.commons.configuration.builder.PropertiesBuilderParametersImpl;
-import org.apache.commons.configuration.io.FileHandler;
 
+*/
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.PropertiesConfiguration;
+
+import junit.framework.TestCase;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConfigurationRepositoryTest extends TestCase {
+public class ConfigurationRepositoryTestCase extends TestCase {
 
     public void testCreateConfigurationInternal() throws Exception {
+        /*
         PropertiesBuilderParametersImpl params = new PropertiesBuilderParametersImpl();
         params.setBeanHelper(BeanHelper.INSTANCE);
 
@@ -39,5 +43,7 @@ public class ConfigurationRepositoryTest extends TestCase {
         System.out.println(config.getString("db.name"));
 
         System.out.println(repos.getString("db.type"));
+        */
     }
+
 }
