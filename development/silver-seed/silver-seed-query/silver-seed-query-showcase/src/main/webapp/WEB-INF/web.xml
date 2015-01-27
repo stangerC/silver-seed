@@ -10,9 +10,10 @@
         <param-value>classpath*:spring/application.xml</param-value>
     </context-param>
 
-    <!--listener>
+    <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener-->
+    </listener>
+
     <servlet>
         <servlet-name>dataServlet</servlet-name>
         <servlet-class>com.silver.seed.query.showcase.servlet.DataServlet</servlet-class>
@@ -42,4 +43,7 @@
         <servlet-name>spring-mvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>/index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

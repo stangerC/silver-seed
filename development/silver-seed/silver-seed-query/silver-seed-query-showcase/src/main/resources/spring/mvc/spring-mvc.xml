@@ -10,19 +10,54 @@
 ">
     <!-- 扫描Controller类 -->
     <context:component-scan base-package="com.silver.seed.query.showcase.web"/>
+
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManager">
+        <constructor-arg>
+            <list>
+                <bean class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
+                    <constructor-arg>
+                        <map>
+                            <entry key="json">
+                                <bean id="org.springframework.http.MediaType.APPLICATION_JSON"
+                                      class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean"/>
+                            </entry>
+                        </map>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
     
     <!--Spring3.1开始的注解 HandlerMapping -->  
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">  
         <!-- Handler的url映射使用了全路径，默认情况下只使用映射的url最后一个斜杠的路径 -->
         <property name="alwaysUseFullPath" value="true"/>
+        <property name="useSuffixPatternMatch" value="false"/>
+        <property name="useRegisteredSuffixPatternMatch" value="true"/>
+        <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
     </bean>
-    <!--Spring3.1开始的注解 HandlerAdapter -->  
-    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
-    
+    <!--Spring3.1开始的注解 HandlerAdapter-->
+    <!--bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/-->
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+        <property name="order" value="1"/>
+        <property name="defaultViews">
+            <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+            </list>
+        </property>
+    </bean>
+
     <!-- jsp视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- jsp文件路径 -->
         <property name="prefix" value="/WEB-INF/pages/jsp/"/>  
         <property name="suffix" value=".jsp"/> 
-    </bean>    
+    </bean>
+
+    <!--DispatcherServlet映射/时，指明静态文件有服务器的默认servlet处理-->
+    <mvc:default-servlet-handler/>
+
+    <mvc:annotation-driven/>
 </beans>

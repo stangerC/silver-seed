@@ -19,9 +19,9 @@ import org.springframework.stereotype.Service;
  *
  * @author Liaojian
  */
-@Service("customerService")
+
 public class CustomerService {
-    @Resource
+
     CustomerRepository customerRepository;
 
     public CustomerRepository getCustomerRepository() {

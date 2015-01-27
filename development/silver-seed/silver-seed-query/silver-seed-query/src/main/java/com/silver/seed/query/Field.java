@@ -1,7 +1,5 @@
 package com.silver.seed.query;
 
-import com.silver.seed.query.QueryResult;
-
 /**
  * @author Liaojian
  */
@@ -26,7 +24,7 @@ public class Field {
     /**
      * Column所属的DataSet
      */
-    private QueryResult dataSet;
+    private Result dataSet;
 
     public String getName() {
         return name;
@@ -76,11 +74,11 @@ public class Field {
         this.type = type;
     }
 
-    public QueryResult getDataSet() {
+    public Result getDataSet() {
         return dataSet;
     }
 
-    public void setDataSet(QueryResult dataSet) {
+    public void setDataSet(Result dataSet) {
         this.dataSet = dataSet;
     }
 }

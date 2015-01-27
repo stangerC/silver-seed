@@ -4,9 +4,9 @@
 
 	<parent>
 		<groupId>com.silver.seed</groupId>
-		<artifactId>silver-seed-configuration-parent</artifactId>
+		<artifactId>silver-seed-parent</artifactId>
 		<version>0.0.2</version>
-        <relativePath>../silver-seed-configuration-parent/pom.xml</relativePath>
+        <relativePath>../../silver-seed-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>silver-seed-configuration</artifactId>

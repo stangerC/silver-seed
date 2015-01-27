@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="${ctx}/component/bootstrap/css/bootstrap.css">
 </head>
 <body>
-    <div id="parameter" class="container-fluid">
-    </div>
-    <div class="container-fluid">
-    </div>
+<div id="parameter" class="container-fluid">
+</div>
+<div class="container-fluid">
+</div>
 </body>
 </html>

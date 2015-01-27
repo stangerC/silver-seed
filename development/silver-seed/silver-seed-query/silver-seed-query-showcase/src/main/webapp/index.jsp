@@ -7,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script type="text/javascript">
-            window.location = "display-with-jqgrid.jsp";
+            window.location = "display-with-jsp.jsp";
         </script>
     </head>
     <body>

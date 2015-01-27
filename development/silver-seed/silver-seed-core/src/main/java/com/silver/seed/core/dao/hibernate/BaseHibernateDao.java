@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 public abstract class BaseHibernateDao<T extends Entity, ID extends Serializable> extends HibernateDaoSupport implements CrudDao<T, ID> {
 
@@ -28,16 +28,16 @@ public abstract class BaseHibernateDao<T extends Entity, ID extends Serializable
     }
 
     public void create(T entity) {
-        getSession().save(entity);
+        getHibernateTemplate().save(entity);
     }
 
     public void delete(T entity) {
-        getSession().delete(entity);
+        getHibernateTemplate().delete(entity);
     }
 
     public void delete(ID id) {
-        T entity = (T) getSession().load(entityClass, id);
-        getSession().delete(entity);
+        T entity = (T) getHibernateTemplate().load(entityClass, id);
+        getHibernateTemplate().delete(entity);
     }
 
     public void delete(Collection<ID> ids) {
@@ -45,11 +45,11 @@ public abstract class BaseHibernateDao<T extends Entity, ID extends Serializable
     }
 
     public void update(T entity) {
-        getSession().update(entity);
+        getHibernateTemplate().update(entity);
     }
 
     public T retrieve(ID id) {
-        return (T) getSession().get(entityClass, id);
+        return (T) getHibernateTemplate().get(entityClass, id);
     }
 
     /**
@@ -58,7 +58,7 @@ public abstract class BaseHibernateDao<T extends Entity, ID extends Serializable
      * @param hql hql语句
      * @return 通过hql查询出来的实体集合，以List形式返回
      */
-    public List<T> query(String hql) {
+    public List<?> query(String hql) {
         return getHibernateTemplate().find(hql);
     }
 
@@ -69,7 +69,7 @@ public abstract class BaseHibernateDao<T extends Entity, ID extends Serializable
      * @param parameters 查询参数
      * @return 通过hql查询出来的实体集合，以List形式返回
      */
-    public List<T> query(String hql, Object[] parameters) {
+    public List<?> query(String hql, Object[] parameters) {
         return getHibernateTemplate().find(hql, parameters);
     }
 
