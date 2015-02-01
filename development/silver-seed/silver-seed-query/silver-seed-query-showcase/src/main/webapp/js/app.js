@@ -92,7 +92,8 @@ querySetting.controller('TableAndViewController',['$http', '$location','$scope',
     };
 
     $scope.submit = function() {
-        $http.post('create/store-table-and-forward.json',{tables: $scope.tablesSelected}).
+        alert(angular.toJson( $scope.tablesSelected));
+        $http.post('create/store-table-and-forward.json', angular.toJson( $scope.tablesSelected)).
             success(function(data, status, headers, config) {
                 $location.path('/condition');
             }).

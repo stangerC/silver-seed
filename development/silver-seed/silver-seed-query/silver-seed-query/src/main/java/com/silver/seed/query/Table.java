@@ -4,14 +4,6 @@ package com.silver.seed.query;
  * Created by Liaojian on 2015/1/27.
  */
 public class Table {
-    public String getTable() {
-        return table;
-    }
-
-    public void setTable(String table) {
-        this.table = table;
-    }
-
     public String getAlias() {
         return alias;
     }
@@ -20,7 +12,15 @@ public class Table {
         this.alias = alias;
     }
 
-    private String table;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name;
 
     private String alias;
 
