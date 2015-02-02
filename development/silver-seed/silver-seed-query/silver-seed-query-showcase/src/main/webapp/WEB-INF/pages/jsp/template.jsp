@@ -6,6 +6,7 @@
     <title>Query Setting</title>
     <c:set var="ctx" value="${pageContext.request.contextPath}"/>
     <link rel="stylesheet" href="http://10.143.172.73/bootstrap/current/css/bootstrap.css">
+    <link rel="stylesheet" href="${ctx}/css/common.css">
 
     <script type="text/javascript" src="http://10.143.172.73/angular/current/angular.js"></script>
     <script type="text/javascript" src="http://10.143.172.73/angular/current/angular-route.js"></script>

@@ -11,11 +11,6 @@ querySetting.config(['$routeProvider', function($routeProvider){
 
 querySetting.controller('BasicController',['$http', '$location', '$scope', function($http, $location, $scope) {
     $scope.validate = function() {
-        console.log('pristine:' + $scope.basicForm.$pristine);
-        console.log('valid:' + $scope.basicForm.$valid);
-        console.log('invalid:' + $scope.basicForm.$invalid);
-        console.log('error:' + $scope.basicForm.name.$error);
-        console.log('validators:' + $scope.basicForm.name.$validators);
         angular.forEach($scope.basicForm.$error, function(key, value) {
             console.log('key:' + key);
             console.log('value:' + value)
