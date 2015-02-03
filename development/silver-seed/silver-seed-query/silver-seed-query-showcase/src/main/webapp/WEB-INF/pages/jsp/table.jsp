@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div ng-controller="TableAndViewController" class="main">
-    <div class="page-header">
+    <div class="main-header">
         <h2>Query Setting</h2>
     </div>
-    <ul class="nav nav-tabs" role="tablist">
+    <ul class="nav nav-tabs" role="tablist" style="margin-top: 10px;">
         <li role="presentation"><a href="#basic">Basic Setting</a></li>
         <li role="presentation" class="active"><a href="#">Table & View</a></li>
         <li role="presentation"><a href="#">Parameter</a></li>
