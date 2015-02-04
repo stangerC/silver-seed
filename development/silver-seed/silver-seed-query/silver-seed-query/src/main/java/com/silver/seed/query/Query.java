@@ -12,7 +12,7 @@ import javax.persistence.*;
  * @author Liaojian
  */
 @javax.persistence.Entity
-@Table(name = "QR_QUERY")
+@javax.persistence.Table(name = "QR_QUERY")
 public class Query implements Entity<String> {
 
     @Id
