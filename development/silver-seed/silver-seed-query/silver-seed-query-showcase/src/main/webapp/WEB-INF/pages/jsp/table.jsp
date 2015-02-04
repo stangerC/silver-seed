@@ -11,24 +11,23 @@
         <li role="presentation"><a href="#">Field</a></li>
     </ul>
 
-    <form class="form-horizontal" role="form" method="POST"
+    <form class="form-inline" role="form" method="POST"
           action="${ctx}/query/store-basic-and-forward">
 
         <div class="panel panel-default" style="margin-top: 10px;">
-            <div class="panel-heading">可选</div>
+            <div class="panel-heading">Select Table</div>
             <div class="panel-body">
                 <div class="form-group">
-                    <label for="inputEmail3" class="control-label">Email</label>
-
-                    <div class="col-md-4">
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                    </div>
-                    <div class="col-md-4">
-                        <select ng-model="selected">
-                            <option ng-repeat="table in tables">{{table}}</option>
-                        </select>
-                    </div>
+                    <label for="table" class="control-label">Table</label>
+                    <select ng-model="selected" class="form-control" id="table">
+                        <option ng-repeat="table in tables">{{table}}</option>
+                    </select>
                 </div>
+                <div class="form-group">
+                    <label for="alias" class="control-label">Alias</label>
+                    <input type="text" id="alias" class="form-control"/>
+                </div>
+                <button type="button" class="btn btn-default">Add</button>
             </div>
             <table class="table table-bordered">
                 <thead>
