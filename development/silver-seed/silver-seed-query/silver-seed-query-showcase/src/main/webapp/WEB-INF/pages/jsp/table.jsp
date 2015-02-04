@@ -16,10 +16,19 @@
 
         <div class="panel panel-default" style="margin-top: 10px;">
             <div class="panel-heading">可选</div>
-            <div class="control-section">
-                <select ng-model="selected">
-                    <option ng-repeat="table in tables">{{table}}</option>
-                </select>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="inputEmail3" class="control-label">Email</label>
+
+                    <div class="col-md-4">
+                        <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="selected">
+                            <option ng-repeat="table in tables">{{table}}</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <table class="table table-bordered">
                 <thead>
