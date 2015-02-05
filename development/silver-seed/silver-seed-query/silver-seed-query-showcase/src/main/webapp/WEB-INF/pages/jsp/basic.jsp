@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <div ng-controller="BasicController">
-    <div class="page-header">
+    <div ng-controller="BasicController" class="main">
+    <div class="main-header">
         <h2>Query Setting</h2>
     </div>
-    <ul class="nav nav-tabs" role="tablist">
+    <ul class="nav nav-tabs nav-query" role="tablist">
         <li role="presentation" class="active"><a href="#basic">Basic Setting</a></li>
         <li role="presentation"><a href="#table-and-view">Table & View</a></li>
         <li role="presentation"><a href="#parameter">Parameter</a></li>
@@ -16,7 +16,7 @@
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" name="name" id="name" placeholder="name" ng-model="name"
-                       required ng-maxlength="50" ng-minlength="3" char  exists>
+                       required ng-maxlength="50" ng-minlength="3" char >
             </div>
         </div>
         <div class="form-group">
