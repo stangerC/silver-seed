@@ -1,11 +1,12 @@
 package com.silver.seed.query;
 
-import com.silver.seed.core.entity.AuditableEntity;
 import com.silver.seed.core.entity.Entity;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.persistence.*;
+import java.util.List;
+
 
 /**
  *
@@ -20,11 +21,17 @@ public class Query implements Entity<String> {
     @GenericGenerator(name="uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
-    @Column(name = "NAME", length = 50, nullable = false)
+    @javax.persistence.Column(name = "NAME", length = 50, nullable = false)
     private String name;
 
-    @Column(name = "LABEL", length = 90, nullable = false)
+    @javax.persistence.Column(name = "LABEL", length = 90, nullable = false)
     private String label;
+
+    @OneToMany(targetEntity = Table.class, mappedBy = "query")
+    private List<Table> tables;
+
+    @OneToMany(targetEntity = JoinColumns.class, mappedBy = "query")
+    private List<JoinColumns> joinColumnses;
 
     @Transient
     public Result queryResult;
@@ -97,5 +104,21 @@ public class Query implements Entity<String> {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public List<Table> getTables() {
+        return tables;
+    }
+
+    public void setTables(List<Table> tables) {
+        this.tables = tables;
+    }
+
+    public List<JoinColumns> getJoinColumnses() {
+        return joinColumnses;
+    }
+
+    public void setJoinColumnses(List<JoinColumns> joinColumnses) {
+        this.joinColumnses = joinColumnses;
     }
 }

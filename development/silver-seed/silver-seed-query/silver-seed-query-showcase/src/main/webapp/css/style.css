@@ -5,6 +5,7 @@
 .main {
     padding: 20px;
 }
+
 @media (min-width: 768px) {
     .main {
         padding-right: 40px;
@@ -21,4 +22,8 @@
 
 .nav-query {
     margin-top:10px;
+}
+
+.box-simple {
+    margin-bottom: 15px;
 }

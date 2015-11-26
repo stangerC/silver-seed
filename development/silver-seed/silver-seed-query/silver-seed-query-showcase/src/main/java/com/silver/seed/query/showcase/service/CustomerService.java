@@ -7,13 +7,12 @@ package com.silver.seed.query.showcase.service;
 
 import com.silver.seed.core.paging.Paging;
 import com.silver.seed.query.showcase.entity.Customer;
-import com.silver.seed.query.showcase.repository.CustomerRepository;
+import com.silver.seed.query.showcase.entity.CustomerRepository;
 import java.util.List;
-import javax.annotation.Resource;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 /**
  *

@@ -1,25 +1,19 @@
 package com.silver.seed.query.showcase.servlet;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 import com.silver.seed.core.paging.Paging;
 import com.silver.seed.query.entity.jqgrid.JqGridData;
 import com.silver.seed.query.showcase.entity.Customer;
-import com.silver.seed.query.showcase.repository.CustomerRepository;
 import com.silver.seed.query.showcase.service.CustomerService;
-import java.awt.Color;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ServiceLocatorFactoryBean;
+
 import org.springframework.data.domain.Page;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;

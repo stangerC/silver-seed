@@ -1,6 +1,6 @@
 package com.silver.seed.query.showcase.servlet;
 
-import com.silver.seed.query.Field;
+import com.silver.seed.query.Column;
 import com.silver.seed.query.entity.TableMeta;
 import com.silver.seed.query.entity.ViewType;
 import com.silver.seed.query.showcase.entity.list.JqGridMeta;
@@ -30,13 +30,13 @@ public class TableTemplateServlet extends HttpServlet {
             throws ServletException, IOException {                       
         JqGridMeta jqGridMeta = new JqGridMeta();
         
-        Field column = new Field();
+        Column column = new Column();
         column.setName("name");
         column.setIndex("name");
         column.setWidth(300);        
         jqGridMeta.addColumn(column);
         
-        column = new Field();
+        column = new Column();
         column.setName("phone");
         column.setIndex("phone");
         column.setWidth(300);

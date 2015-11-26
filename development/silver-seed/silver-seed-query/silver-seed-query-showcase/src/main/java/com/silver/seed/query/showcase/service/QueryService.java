@@ -1,8 +1,11 @@
 package com.silver.seed.query.showcase.service;
 
-import com.silver.seed.query.Query;
-import com.silver.seed.query.Result;
+import com.silver.seed.query.JoinColumns;
+import com.silver.seed.query.Table;
+import com.silver.seed.query.entity.ColumnVO;
+import com.silver.seed.query.repository.ColumnPairRepository;
 import com.silver.seed.query.showcase.repository.QueryRepository;
+import com.silver.seed.query.repository.TableRepository;
 import com.silver.wheel.common.exception.CodedRuntimeException;
 import org.springframework.jdbc.support.DatabaseMetaDataCallback;
 import org.springframework.jdbc.support.JdbcUtils;
@@ -27,6 +30,12 @@ public class QueryService {
     private QueryRepository queryRepository;
 
     @Resource
+    private TableRepository tableRepository;
+
+    @Resource
+    private ColumnPairRepository columnPairRepository;
+
+    @Resource
     private DataSource dataSource;
 
     public QueryRepository getQueryRepository() {
@@ -37,12 +46,28 @@ public class QueryService {
         this.queryRepository = queryRepository;
     }
 
+    public TableRepository getTableRepository() {
+        return tableRepository;
+    }
+
+    public void setTableRepository(TableRepository tableRepository) {
+        this.tableRepository = tableRepository;
+    }
+
     public DataSource getDataSource() {
         return dataSource;
     }
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public ColumnPairRepository getColumnPairRepository() {
+        return columnPairRepository;
+    }
+
+    public void setColumnPairRepository(ColumnPairRepository columnPairRepository) {
+        this.columnPairRepository = columnPairRepository;
     }
 
     public List<String> getSchemas() {
@@ -109,5 +134,40 @@ public class QueryService {
             throw new CodedRuntimeException(e);
         }
         return exists;
+    }
+
+    public List<ColumnVO> getColumns(final String table) {
+        List<ColumnVO> columns = null;
+
+        try {
+            columns = (List<ColumnVO>)JdbcUtils.extractDatabaseMetaData(dataSource, new DatabaseMetaDataCallback() {
+                @Override
+                public Object processMetaData(DatabaseMetaData dbmd) throws SQLException, MetaDataAccessException {
+                    String catalog = dbmd.getConnection().getCatalog();
+                    String schema = null;
+                    ResultSet rs = dbmd.getTables(catalog, schema, table, new String[] {"TABLE"});
+                    List<ColumnVO> columns = new ArrayList<ColumnVO>();
+                    if(rs.next()) {
+                        ResultSetMetaData rsmd = rs.getMetaData();
+                        for(int i = 1; i <= rsmd.getColumnCount(); i ++) {
+                            ColumnVO column = new ColumnVO();
+                            column.setName(rsmd.getColumnName(i));
+                            column.setType(rsmd.getColumnType(i));
+                            columns.add(column);
+                        }
+                    }
+                    return columns;
+                }
+            });
+        } catch (MetaDataAccessException e) {
+            throw new CodedRuntimeException(e);
+        }
+
+        return columns;
+    }
+
+    public void saveTableAndJoindedColumns(List<Table> tables, List<JoinColumns> columns) {
+        getTableRepository().save(tables);
+        getColumnPairRepository().save(columns);
     }
 }

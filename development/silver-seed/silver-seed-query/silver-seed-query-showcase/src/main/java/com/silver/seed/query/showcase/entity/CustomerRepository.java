@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.silver.seed.query.showcase.repository;
+package com.silver.seed.query.showcase.entity;
 
 import com.silver.seed.query.showcase.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,6 @@
 package com.silver.seed.query.showcase.entity.list;
 
-import com.silver.seed.query.Field;
+import com.silver.seed.query.Column;
 import com.silver.seed.query.view.ViewMeta;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +15,13 @@ public class JqGridMeta implements ViewMeta{
     private String mtype;
     private String url;
     
-    private List<Field> columns = new ArrayList<Field>();
+    private List<Column> columns = new ArrayList<Column>();
     
     public String getColNames() {
         StringBuilder buffer = new StringBuilder();
         if(columns != null && columns.size() > 0) {
             buffer = new StringBuilder();
-            for(Field column : columns) {
+            for(Column column : columns) {
                 buffer.append("'").append(column.getName()).append("',");
             }
             buffer.delete(buffer.length() - 1, buffer.length());
@@ -34,7 +34,7 @@ public class JqGridMeta implements ViewMeta{
         
         if(columns != null && columns.size() > 0) {
             buffer = new StringBuilder();
-            for(Field column : columns) {
+            for(Column column : columns) {
                 buffer.append("{name:'").append(column.getName()).append("',index:'")
                         .append(column.getIndex()).append("'");
                 if(column.getWidth() != null) {
@@ -51,7 +51,7 @@ public class JqGridMeta implements ViewMeta{
         return buffer.toString();
     }        
     
-    public List<Field> addColumn(Field column) {
+    public List<Column> addColumn(Column column) {
         columns.add(column);
         return columns;
     }

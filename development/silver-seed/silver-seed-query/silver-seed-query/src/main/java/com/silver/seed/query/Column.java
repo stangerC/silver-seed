@@ -3,7 +3,7 @@ package com.silver.seed.query;
 /**
  * @author Liaojian
  */
-public class Field {
+public class Column {
 
     /**
      * 列的名字
@@ -19,7 +19,7 @@ public class Field {
     private String index;
     private Integer width;
     private String align;
-    private String type;
+    private int type;
     private boolean sortable;
     /**
      * Column所属的DataSet
@@ -66,11 +66,11 @@ public class Field {
         this.sortable = sortable;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

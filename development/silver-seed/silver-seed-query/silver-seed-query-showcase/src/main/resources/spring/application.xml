@@ -44,9 +44,9 @@
         <property name="persistenceXmlLocation" value="classpath*:/META-INF/persistence.xml"/>
     </bean>
 
-    <jpa:repositories base-package="com.silver.seed.query.showcase.repository"
+    <jpa:repositories base-package="com.silver.seed.query.showcase.repository,com.silver.seed.query.repository"
                       transaction-manager-ref="transactionManager" entity-manager-factory-ref="emf">
-        <repository:include-filter type="regex" expression=".*QueryRepository"/>
+        <repository:include-filter type="regex" expression=".*Repository"/>
     </jpa:repositories>
 
         

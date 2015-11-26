@@ -101,7 +101,7 @@ public abstract class StringUtils {
 
 	/**
 	 * 检查给出的字符串是否包含空格
-	 * @param 需要检查的字符串 (可以为 <code>null</code>)
+	 * @param str (可以为 <code>null</code>)
 	 * @return <code>true</code> 如果字符串不为空，而且最少包含一个
 	 * 空格
 	 * @see java.lang.Character#isWhitespace

@@ -36,6 +36,7 @@
         <property name="useRegisteredSuffixPatternMatch" value="true"/>
         <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
     </bean>
+
     <!--Spring3.1开始的注解 HandlerAdapter-->
     <!--bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/-->
 

@@ -7,7 +7,7 @@
     <ul class="nav nav-tabs nav-query" role="tablist">
         <li role="presentation" class="active"><a href="#basic">Basic Setting</a></li>
         <li role="presentation"><a href="#table-and-view">Table & View</a></li>
-        <li role="presentation"><a href="#parameter">Parameter</a></li>
+        <li role="presentation"><a href="#condition">Condition</a></li>
         <li role="presentation"><a href="#field">Field</a></li>
     </ul>
     <form class="form-horizontal" style="width: 600px;margin:0 auto;padding:15px;" role="form" method="POST"
