@@ -1,5 +1,6 @@
-package com.silver.seed.query;
+package com.silver.seed.query.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.silver.seed.core.entity.Entity;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -23,9 +24,10 @@ public class Table implements Entity<String> {
     @javax.persistence.Column(name = "ALIAS", length = 10)
     private String alias;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "QUERY_ID")
-    private Query query;
+    private com.silver.seed.query.entity.Query query;
 
     public String getAlias() {
         return alias;
@@ -43,16 +45,26 @@ public class Table implements Entity<String> {
         this.name = name;
     }
 
-    public Query getQuery() {
+    public com.silver.seed.query.entity.Query getQuery() {
         return query;
     }
 
-    public void setQuery(Query query) {
+    public void setQuery(com.silver.seed.query.entity.Query query) {
         this.query = query;
     }
 
     @Override
     public String getId() {
         return id;
+    }
+
+    public String generateSql() {
+        StringBuilder sb = new StringBuilder("");
+        sb.append(getName());
+        if(getAlias() != null) {
+            sb.append(" as ").append(getAlias());
+        }
+
+        return sb.toString();
     }
 }

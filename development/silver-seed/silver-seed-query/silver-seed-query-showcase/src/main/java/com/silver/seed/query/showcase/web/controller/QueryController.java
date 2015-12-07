@@ -1,12 +1,8 @@
-package com.silver.seed.query.showcase.web;
+package com.silver.seed.query.showcase.web.controller;
 
-import com.silver.seed.query.Condition;
-import com.silver.seed.query.JoinColumns;
-import com.silver.seed.query.Query;
-import com.silver.seed.query.Table;
-import com.silver.seed.query.showcase.repository.QueryRepository;
+import com.silver.seed.query.entity.*;
 import com.silver.seed.query.showcase.service.QueryService;
-import com.silver.seed.query.entity.ColumnVO;
+import com.silver.seed.query.showcase.web.Wizard;
 import com.silver.wheel.common.exception.CodedRuntimeException;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
@@ -40,7 +36,6 @@ class TableAndColumnVO {
 }
 
 
-
 /**
  * @author Liaojian
  */
@@ -54,36 +49,33 @@ public class QueryController {
 
     public static final String WIZARD_SESSION_NAME = "wizard";
 
-    public static final  String BASIC_NODE_NAME = "basic";
+    public static final String BASIC_NODE_NAME = "basic";
 
-    public static final  String TABLE_NODE_NAME = "table";
+    public static final String TABLE_NODE_NAME = "table";
 
-    public static final  String CONDITION_NODE_NAME = "condition";
+    public static final String CONDITION_NODE_NAME = "condition";
 
     public static final String COLUMN_NODE_NAME = "column";
 
-    public static final String SUMMARY_NODE_NAME = "summary";
-
-    @Resource
-    private QueryRepository queryRepository;
+    public static final String PREVIEW_NODE_NAME = "preview";
 
     @Resource
     private QueryService queryService;
 
-    /*
-     组装model中的Wizard对象和Query对象。注意Wizard对象和Query对象已经在类的@SessionAttributes注解中指定，所以
-     要在组装前判断是否存在，避免覆盖掉Session中的对象。
+    /**
+     * 组装model中的Wizard对象和Query对象。注意Wizard对象和Query对象已经在类的@SessionAttributes注解中指定，所以
+     * 要在组装前判断是否存在，避免覆盖掉Session中的对象。
      */
     @ModelAttribute
     public void populateModel(Model model) {
 
-        if(!model.containsAttribute(WIZARD_SESSION_NAME)) {
-            model.addAttribute(WIZARD_SESSION_NAME, new Wizard(new String[] {
-                    BASIC_NODE_NAME,TABLE_NODE_NAME, CONDITION_NODE_NAME, COLUMN_NODE_NAME,
-                    SUMMARY_NODE_NAME}));
+        if (!model.containsAttribute(WIZARD_SESSION_NAME)) {
+            model.addAttribute(WIZARD_SESSION_NAME, new Wizard(new String[]{
+                    BASIC_NODE_NAME, TABLE_NODE_NAME, CONDITION_NODE_NAME, COLUMN_NODE_NAME,
+                    PREVIEW_NODE_NAME}));
         }
 
-        if(!model.containsAttribute(QUERY_SESSION_NAME)) {
+        if (!model.containsAttribute(QUERY_SESSION_NAME)) {
             Query query = new Query();
             model.addAttribute(QUERY_SESSION_NAME, query);
         }
@@ -103,6 +95,8 @@ public class QueryController {
     public String storeBasicAndForward(@RequestBody Query query, @ModelAttribute(value = QUERY_SESSION_NAME) Query pendingQuery,
                                        @ModelAttribute(value = WIZARD_SESSION_NAME) Wizard wizard) {
 
+        queryService.saveQuery(query);
+
         try {
             BeanUtils.copyProperties(pendingQuery, query);
         } catch (IllegalAccessException e) {
@@ -111,11 +105,9 @@ public class QueryController {
             throw new CodedRuntimeException(e);
         }
 
-        queryRepository.saveAndFlush(query);
-
         wizard.goForward();
 
-        return "table";
+        return TABLE_NODE_NAME;
     }
 
     @RequestMapping(value = "create/table", method = RequestMethod.GET)
@@ -124,9 +116,10 @@ public class QueryController {
     }
 
     @RequestMapping(value = "create/store-table-and-forward", method = RequestMethod.POST)
-    public String storeTableAndForward(@RequestBody TableAndColumnVO tc, @ModelAttribute(value = WIZARD_SESSION_NAME) Wizard wizard,
+    public String storeTableAndForward(@RequestBody TableAndColumnVO tc,
+                                       @ModelAttribute(value = WIZARD_SESSION_NAME) Wizard wizard,
                                        @ModelAttribute(value = QUERY_SESSION_NAME) Query query) {
-        queryService.saveTableAndJoindedColumns(tc.getTables(), tc.getColumns());
+        queryService.saveTableAndJoindedColumns(query.getId(), tc.getTables(), tc.getColumns());
 
         query.setTables(tc.getTables());
         query.setJoinColumnses(tc.getColumns());
@@ -142,10 +135,52 @@ public class QueryController {
     }
 
     @RequestMapping(value = "create/store-condition-and-forward", method = RequestMethod.POST)
-    public String storeConditionAndForward(@RequestBody List<Condition> conditions, @ModelAttribute(value = WIZARD_SESSION_NAME) Wizard wizard,
+    public String storeConditionAndForward(@RequestBody List<Condition> conditions,
+                                           @ModelAttribute(value = WIZARD_SESSION_NAME) Wizard wizard,
                                            @ModelAttribute(value = QUERY_SESSION_NAME) Query query) {
-        System.out.println(conditions);
+        for(Condition condition : conditions) {
+            condition.setQuery(query);
+            for(Table table : query.getTables()) {
+                if (table.getId() != null && table.getId().equals(condition.getTable().getId())) {
+                    condition.setTable(table);
+                }
+            }
+        }
+        getQueryService().saveConditions(conditions);
+        query.setConditions(conditions);
+        wizard.goForward();
         return COLUMN_NODE_NAME;
+    }
+
+    @RequestMapping(value = "create/column", method = RequestMethod.GET)
+    public String column(@ModelAttribute(WIZARD_SESSION_NAME) Wizard wizard) {
+        return goForwardCurrentNode(COLUMN_NODE_NAME, wizard);
+    }
+
+    @RequestMapping(value = "create/store-column-then-forward", method = RequestMethod.POST)
+    public String storeColumnThenForward(@RequestBody List<Column> columns,
+                                         @ModelAttribute(value = WIZARD_SESSION_NAME) Wizard wizard,
+                                         @ModelAttribute(value = QUERY_SESSION_NAME) Query query) {
+
+        for(Column column : columns) {
+            column.setQuery(query);
+            for(Table table : query.getTables()) {
+                if (table.getId() != null && table.getId().equals(column.getTable().getId())) {
+                    column.setTable(table);
+                }
+            }
+        }
+
+        getQueryService().saveColumns(columns);
+        wizard.goForward();
+        return PREVIEW_NODE_NAME;
+    }
+
+    @RequestMapping(value = "create/preview", method = RequestMethod.GET)
+    public String preview(@ModelAttribute(WIZARD_SESSION_NAME) Wizard wizard,
+                          @ModelAttribute(value = QUERY_SESSION_NAME) Query query,Model model) {
+        model.addAttribute("previewSQL", getQueryService().generateSQL(query.getId()));
+        return goForwardCurrentNode(PREVIEW_NODE_NAME, wizard);
     }
 
     /*
@@ -181,7 +216,7 @@ public class QueryController {
 
 
     private String goForwardCurrentNode(String viewName, Wizard wizard) {
-        if(wizard.getCurrentWizardNode().getName().equals(viewName)) {
+        if (wizard.getCurrentWizardNode().getName().equals(viewName)) {
             return viewName;
         }
         return wizard.getBeginNode().getName();
@@ -194,13 +229,4 @@ public class QueryController {
     public void setQueryService(QueryService queryService) {
         this.queryService = queryService;
     }
-
-    public QueryRepository getQueryRepository() {
-        return queryRepository;
-    }
-
-    public void setQueryRepository(QueryRepository queryRepository) {
-        this.queryRepository = queryRepository;
-    }
-
 }

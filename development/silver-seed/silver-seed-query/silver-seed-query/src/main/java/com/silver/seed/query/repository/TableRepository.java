@@ -1,6 +1,6 @@
 package com.silver.seed.query.repository;
 
-import com.silver.seed.query.Table;
+import com.silver.seed.query.entity.Table;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

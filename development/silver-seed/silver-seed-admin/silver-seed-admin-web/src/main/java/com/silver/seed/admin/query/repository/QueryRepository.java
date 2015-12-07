@@ -1,4 +1,4 @@
-package com.silver.seed.query.showcase.repository;
+package com.silver.seed.admin.query.repository;
 
 import com.silver.seed.query.entity.Query;
 import org.springframework.data.jpa.repository.JpaRepository;

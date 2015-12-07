@@ -1,9 +1,9 @@
-package com.silver.seed.query.showcase.servlet;
+package com.silver.seed.admin.query.servlet;
 
 import com.silver.seed.query.entity.Column;
 import com.silver.seed.query.entity.TableMeta;
 import com.silver.seed.query.entity.ViewType;
-import com.silver.seed.query.showcase.entity.list.JqGridMeta;
+import com.silver.seed.admin.query.entity.list.JqGridMeta;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

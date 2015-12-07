@@ -1,10 +1,12 @@
-package com.silver.seed.query;
+package com.silver.seed.query.entity;
 
 import com.silver.seed.core.entity.Entity;
+import com.silver.seed.query.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.persistence.*;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -27,11 +29,17 @@ public class Query implements Entity<String> {
     @javax.persistence.Column(name = "LABEL", length = 90, nullable = false)
     private String label;
 
-    @OneToMany(targetEntity = Table.class, mappedBy = "query")
-    private List<Table> tables;
+    @OneToMany(targetEntity = com.silver.seed.query.entity.Table.class, mappedBy = "query", fetch = FetchType.EAGER)
+    private List<com.silver.seed.query.entity.Table> tables;
 
-    @OneToMany(targetEntity = JoinColumns.class, mappedBy = "query")
-    private List<JoinColumns> joinColumnses;
+    @OneToMany(targetEntity = com.silver.seed.query.entity.JoinColumns.class, mappedBy = "query", fetch = FetchType.EAGER)
+    private List<com.silver.seed.query.entity.JoinColumns> joinColumnses;
+
+    @OneToMany(targetEntity = Condition.class, mappedBy = "query", fetch = FetchType.EAGER)
+    private List<Condition> conditions;
+
+    @OneToMany(targetEntity = Column.class, mappedBy = "query", fetch = FetchType.EAGER)
+    private List<Column> columns;
 
     @Transient
     public Result queryResult;
@@ -90,6 +98,10 @@ public class Query implements Entity<String> {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -106,19 +118,57 @@ public class Query implements Entity<String> {
         this.label = label;
     }
 
-    public List<Table> getTables() {
+    public List<com.silver.seed.query.entity.Table> getTables() {
         return tables;
     }
 
-    public void setTables(List<Table> tables) {
+    public void setTables(List<com.silver.seed.query.entity.Table> tables) {
         this.tables = tables;
     }
 
-    public List<JoinColumns> getJoinColumnses() {
+    public List<com.silver.seed.query.entity.JoinColumns> getJoinColumnses() {
         return joinColumnses;
     }
 
-    public void setJoinColumnses(List<JoinColumns> joinColumnses) {
+    public void setJoinColumnses(List<com.silver.seed.query.entity.JoinColumns> joinColumnses) {
         this.joinColumnses = joinColumnses;
+    }
+
+    public List<Condition> getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(List<Condition> conditions) {
+        this.conditions = conditions;
+    }
+
+    public List<Column> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(List<Column> columns) {
+        this.columns = columns;
+    }
+
+    public String generateSql() {
+        //todo，增加对没有表的异常处理
+
+        StringBuilder sb = new StringBuilder("select ");
+        for(Column column : getColumns()) {
+            sb.append(column.generateSql());
+        }
+
+        sb.append(" from ");
+        for(com.silver.seed.query.entity.Table table : getTables()) {
+            sb.append(table.generateSql()).append(" ");
+        }
+
+        sb.append(" where ");
+        for(Condition condition : getConditions()) {
+            sb.append(condition.generateSql()).append(" and ");
+        }
+        sb.delete(sb.length() - 5, sb.length() - 1);
+
+        return sb.toString();
     }
 }

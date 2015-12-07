@@ -1,4 +1,4 @@
-package com.silver.seed.query.showcase.service;
+package com.silver.seed.admin.query.service;
 
 import com.silver.seed.query.entity.Condition;
 import com.silver.seed.query.entity.JoinColumns;
@@ -9,7 +9,7 @@ import com.silver.seed.query.entity.ColumnVO;
 import com.silver.seed.query.repository.ColumnPairRepository;
 import com.silver.seed.query.repository.ColumnRepository;
 import com.silver.seed.query.repository.ConditionRepository;
-import com.silver.seed.query.showcase.repository.QueryRepository;
+import com.silver.seed.admin.query.repository.QueryRepository;
 import com.silver.seed.query.repository.TableRepository;
 import com.silver.wheel.common.exception.CodedRuntimeException;
 import org.springframework.jdbc.support.DatabaseMetaDataCallback;

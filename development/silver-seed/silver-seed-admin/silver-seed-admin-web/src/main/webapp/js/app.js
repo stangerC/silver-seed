@@ -43,12 +43,11 @@
 
     querySetting.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
-            when('/basic', {templateUrl: '/query/setting/create/basic'}).
-            when('/store-basic-and-forward', {templateUrl: '/query/setting/create/store-basic-and-forward'}).
-            when('/table', {templateUrl: '/query/setting/create/table'}).
-            when('/condition', {templateUrl: '/query/setting/create/condition'}).
-            when('/column', {templateUrl: '/query/setting/create/column'}).
-            when('/preview', {templateUrl: '/query/setting/create/preview'}).
+            when('/basic', {templateUrl: '/admin/query/setting/create/basic'}).
+            when('/table', {templateUrl: '/admin/query/setting/create/table'}).
+            when('/condition', {templateUrl: '/admin/query/setting/create/condition'}).
+            when('/column', {templateUrl: '/admin/query/setting/create/column'}).
+            when('/preview', {templateUrl: '/admin/query/setting/create/preview'}).
             otherwise({redirectTo: '/basic'})
     }]);
 
@@ -59,7 +58,7 @@
             if ($scope.basicForm.$invalid) {
                 return
             }
-            $http.post('create/store-basic-and-forward.json', {name: $scope.name, label: $scope.label }).
+            $http.post('create/store-basic-then-forward.json', {name: $scope.name, label: $scope.label }).
                 success(function (data, status, headers, config) {
                     $location.path('/table');
                 }).
@@ -118,7 +117,7 @@
             };
 
             $scope.submit = function () {
-                $http.post('create/store-table-and-forward.json', angular.toJson({
+                $http.post('create/store-table-then-forward.json', angular.toJson({
                     tables: $scope.tablesSelected,
                     columns: $scope.columnsJoined
                 })).
@@ -311,7 +310,7 @@
             }
 
             $scope.submit = function () {
-                $http.post('create/store-condition-and-forward.json', angular.toJson($scope.conditions)).//将数组转化为json字符串
+                $http.post('create/store-condition-then-forward.json', angular.toJson($scope.conditions)).//将数组转化为json字符串
                     success(function (data, status, headers, config) {
                         $location.path('/column');
                     }).

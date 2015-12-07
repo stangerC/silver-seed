@@ -33,7 +33,7 @@
 
     <aop:config>
         <aop:pointcut id="serviceOpertions"
-                      expression="execution(* com.silver.seed.query.showcase.service..Service.*(..))"/>
+                      expression="execution(* com.silver.seed.admin.query.service..Service.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOpertions"/>
     </aop:config>
 
@@ -52,7 +52,7 @@
         <property name="persistenceXmlLocation" value="classpath*:/META-INF/persistence.xml"/>
     </bean>
 
-    <jpa:repositories base-package="com.silver.seed.query.showcase.repository,com.silver.seed.query.repository"
+    <jpa:repositories base-package="com.silver.seed.admin.query.repository,com.silver.seed.query.repository"
                       transaction-manager-ref="transactionManager" entity-manager-factory-ref="emf">
         <repository:include-filter type="regex" expression=".*Repository"/>
     </jpa:repositories>

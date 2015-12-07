@@ -9,7 +9,7 @@
           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
 ">
     <!-- 扫描Controller类 -->
-    <context:component-scan base-package="com.silver.seed.query.showcase.web.controller"/>
+    <context:component-scan base-package="com.silver.seed.admin.query.web.controller"/>
 
     <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManager">
         <constructor-arg>
@@ -70,7 +70,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/setting/*"/>
-            <bean class="com.silver.seed.query.showcase.web.interceptor.TimeoutInterceptor"/>
+            <bean class="com.silver.seed.admin.query.web.interceptor.TimeoutInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 </beans>

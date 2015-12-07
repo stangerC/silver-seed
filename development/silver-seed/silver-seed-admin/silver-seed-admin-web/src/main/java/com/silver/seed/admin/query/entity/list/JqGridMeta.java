@@ -1,4 +1,4 @@
-package com.silver.seed.query.showcase.entity.list;
+package com.silver.seed.admin.query.entity.list;
 
 import com.silver.seed.query.entity.Column;
 import com.silver.seed.query.view.ViewMeta;

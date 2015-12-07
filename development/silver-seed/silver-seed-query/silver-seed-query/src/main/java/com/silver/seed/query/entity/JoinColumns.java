@@ -1,4 +1,4 @@
-package com.silver.seed.query;
+package com.silver.seed.query.entity;
 
 import com.silver.seed.core.entity.Entity;
 import org.hibernate.annotations.GenericGenerator;
@@ -35,9 +35,9 @@ public class JoinColumns implements Entity<String> {
     @javax.persistence.Column(name = "COLUMN_TWO", length = 50, nullable = false)
     private String columnTwo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "QUERY_ID")
-    private Query query;
+    private com.silver.seed.query.entity.Query query;
 
     public String getColumnTwo() {
         return columnTwo;
@@ -91,11 +91,11 @@ public class JoinColumns implements Entity<String> {
         this.tableTwoAlias = tableTwoAlias;
     }
 
-    public Query getQuery() {
+    public com.silver.seed.query.entity.Query getQuery() {
         return query;
     }
 
-    public void setQuery(Query query) {
+    public void setQuery(com.silver.seed.query.entity.Query query) {
         this.query = query;
     }
 
