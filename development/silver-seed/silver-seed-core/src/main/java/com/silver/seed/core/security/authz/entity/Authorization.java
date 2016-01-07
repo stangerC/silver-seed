@@ -1,6 +1,6 @@
-package com.silver.seed.core.security.authz;
+package com.silver.seed.core.security.authz.entity;
 
-import com.silver.seed.core.security.authc.Principal;
+import com.silver.seed.core.security.authc.entity.Principal;
 
 /**
  *
@@ -10,8 +10,6 @@ public interface Authorization {
     public boolean hasPermission();
     
     public Principal getPrincipal();
-    
-    public Role getRole();
     
     public Action getAction();
     

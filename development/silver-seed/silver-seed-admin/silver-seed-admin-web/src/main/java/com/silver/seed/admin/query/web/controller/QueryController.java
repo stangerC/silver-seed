@@ -41,7 +41,7 @@ class TableAndColumnVO {
  * @author Liaojian
  */
 @Controller
-@RequestMapping(value = "/query/setting")
+@RequestMapping(value = "/module/query/setting")
 @SessionAttributes(value = {QueryController.QUERY_SESSION_NAME, QueryController.WIZARD_SESSION_NAME},
         types = {Query.class, Wizard.class})
 public class QueryController {

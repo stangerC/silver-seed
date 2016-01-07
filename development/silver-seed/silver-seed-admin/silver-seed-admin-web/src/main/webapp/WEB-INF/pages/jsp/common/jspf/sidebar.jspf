@@ -1,0 +1,20 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+        <dl class="nav nav-sidebar">
+            <dt><a href="${ctx}/">管理首页</a></dt>
+        </dl>
+        <dl class="nav nav-sidebar">
+            <dt>页面</dt>
+            <dd class="pagelist-active"><a href="${ctx}/pages/list">查看页面</a></dd>
+            <dd class="pagenew-active"><a href="${ctx}/pages/create">创建页面</a></dd>
+        </dl>
+        <dl class="nav nav-sidebar">
+            <dt>配置信息管理</dt>
+            <dd class="configset-active"><a href="${ctx}/configurations">配置集</a></dd>
+            <dd class="configitem-active"><a href="${ctx}/configurations/items">配置项</a></dd>
+        </dl>
+    </div>
+</div>

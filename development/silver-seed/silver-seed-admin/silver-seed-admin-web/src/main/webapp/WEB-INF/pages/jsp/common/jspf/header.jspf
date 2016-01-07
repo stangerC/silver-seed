@@ -1,0 +1,27 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ include file="header-setting.jspf"%>
+<div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span style="color:#FFF;padding-top: 15px; padding-bottom: 15px; display: block;">当前站点:${siteTitle}</span>
+        </div>
+        <div class="navbar-collapse collapse">
+            <span style="color:#FFF;padding:15px;display: block;float:right;">${userName}</span>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <input type="text" placeholder="Search..." class="form-control">
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,15 @@
+var messageRote = function(message) {
+    if(message.type == "alert") {
+
+    } else if(message.type == "forward") {
+
+    } else if(message.type == "alertThenForward") {
+
+    } else if(message.type == "error") {
+
+    }
+}
+
 (function (angular) {
     var existsValidation = function ($q, $http) {
         return {
@@ -39,41 +51,25 @@
         }
     }
 
-    var querySetting = angular.module('querySetting', ['ngRoute', 'ngMessages']);
+    var adminApp = angular.module('adminApp', ['ngRoute', 'ngMessages']);
 
-    querySetting.config(['$routeProvider', function ($routeProvider) {
+    adminApp.config(['$routeProvider', '$locationProvider',function ($routeProvider, $locationProvider) {
         $routeProvider.
-            when('/basic', {templateUrl: '/admin/query/setting/create/basic'}).
-            when('/table', {templateUrl: '/admin/query/setting/create/table'}).
-            when('/condition', {templateUrl: '/admin/query/setting/create/condition'}).
-            when('/column', {templateUrl: '/admin/query/setting/create/column'}).
-            when('/preview', {templateUrl: '/admin/query/setting/create/preview'}).
-            otherwise({redirectTo: '/basic'})
+            when('/', {templateUrl:'/admin/index'}).
+            when('/query/setting/create', {templateUrl: '/admin/module/query/setting/create/basic'}).
+            when('/query/setting/table', {templateUrl: '/admin/module/query/setting/create/table'}).
+            when('/query/setting/condition', {templateUrl: '/admin/module/query/setting/create/condition'}).
+            when('/query/setting/column', {templateUrl: '/admin/module/query/setting/create/column'}).
+            when('/query/setting/preview', {templateUrl: '/admin/module/query/setting/create/preview'}).
+            otherwise({redirectTo: '/'});
+        $locationProvider.html5Mode(true);
     }]);
 
-    querySetting.controller('BasicController', ['$http', '$location', '$scope', function ($http, $location, $scope) {
-        $scope.existsUrl = 'tables/exists/';
-
-        $scope.submit = function () {
-            if ($scope.basicForm.$invalid) {
-                return
-            }
-            $http.post('create/store-basic-then-forward.json', {name: $scope.name, label: $scope.label }).
-                success(function (data, status, headers, config) {
-                    $location.path('/table');
-                }).
-                error(function (data, status, headers, config) {
-                    alert('error')
-                })
-        }
-    }])
-        .directive('exists', existsValidation)
-        .directive('char', charValidation);
 
     /**
      * 数据库信息服务。此服务提供数据库的相关信息，如数据库表，数据库字段等
      */
-    querySetting.factory('DBInfoService', ['$http', function ($http) {
+    adminApp.factory('DBInfoService', ['$http', function ($http) {
         /**
          * 获取一个schema下所有的表的信息
          * @returns {*}
@@ -97,9 +93,33 @@
     }]);
 
     /**
+     * 查询基础设置
+     */
+    adminApp.controller('BasicController', ['$http', '$location', '$scope', function ($http, $location, $scope) {
+        $scope.existsUrl = 'module/query/setting/create/tables/exists/';
+
+        $scope.submit = function () {
+            if ($scope.basicForm.$invalid) {
+                return
+            }
+            $http.post('module/query/setting/create/store-basic-then-forward.json',
+                {name: $scope.name, label: $scope.label }).
+                success(function (data, status, headers, config) {
+                    $location.path('/table');
+                }).
+                error(function (data, status, headers, config) {
+                    alert('error')
+                })
+        }
+    }])
+        .directive('exists', existsValidation)
+        .directive('char', charValidation);
+
+
+    /**
      * 数据表控制器
      */
-    querySetting.controller('TableController', ['$http', '$location', '$scope', 'DBInfoService', '$element',
+    adminApp.controller('TableController', ['$http', '$location', '$scope', 'DBInfoService', '$element',
         function ($http, $location, $scope, DBInfoService, $element) {
             $scope.tablesSelected = [];
             $scope.tablesUnselected = [];
@@ -117,7 +137,7 @@
             };
 
             $scope.submit = function () {
-                $http.post('create/store-table-then-forward.json', angular.toJson({
+                $http.post('module/query/setting/create/store-table-then-forward.json', angular.toJson({
                     tables: $scope.tablesSelected,
                     columns: $scope.columnsJoined
                 })).
@@ -271,7 +291,7 @@
     /**
      * 条件控制器
      */
-    querySetting.controller('ConditionController', ['$http', '$location', '$scope', 'DBInfoService',
+    adminApp.controller('ConditionController', ['$http', '$location', '$scope', 'DBInfoService',
         function ($http, $location, $scope, DBInfoService) {
             $scope.operations = [
                 {label: '>', name: 'greaterThan'},
@@ -310,7 +330,7 @@
             }
 
             $scope.submit = function () {
-                $http.post('create/store-condition-then-forward.json', angular.toJson($scope.conditions)).//将数组转化为json字符串
+                $http.post('module/query/setting/create/store-condition-then-forward.json', angular.toJson($scope.conditions)).//将数组转化为json字符串
                     success(function (data, status, headers, config) {
                         $location.path('/column');
                     }).
@@ -323,7 +343,7 @@
     /**
      * 查询字段控制器
      */
-    querySetting.controller('ColumnController', ['$http', '$location', '$scope', 'DBInfoService',
+    adminApp.controller('ColumnController', ['$http', '$location', '$scope', 'DBInfoService',
         function ($http, $location, $scope, DBInfoService) {
             $scope.columnsForSelection = [];
 
@@ -350,7 +370,7 @@
             }
 
             $scope.submit = function () {
-                $http.post('create/store-column-then-forward.json', angular.toJson($scope.columnsForSelection)).//将数组转化为json字符串
+                $http.post('module/query/setting/create/store-column-then-forward.json', angular.toJson($scope.columnsForSelection)).//将数组转化为json字符串
                     success(function (data, status, headers, config) {
                         console.log(data.wizard);
                         $location.path('/preview');
@@ -364,8 +384,25 @@
     /**
      * 预览字段控制器
      */
-    querySetting.controller('PreviewController', ['$http', '$location', '$scope', 'DBInfoService',
+    adminApp.controller('PreviewController', ['$http', '$location', '$scope', 'DBInfoService',
         function ($http, $location, $scope, DBInfoService) {
 
+        }]);
+
+})(window.angular);
+
+(function (angular){
+    var adminApp = angular.module('adminApp', ['ngRoute', 'ngMessages']);
+    adminApp.controller('LoginController',['$http', '$location', '$scope',
+        function ($http, $location, $scope, DBInfoService) {
+            $scope.submit = function () {
+                $http.post('login.json', angular.toJson($scope.conditions)).//将数组转化为json字符串
+                    success(function (data, status, headers, config) {
+                        $location.path('/');
+                    }).
+                    error(function (data, status, headers, config) {
+                        alert('error')
+                    })
+            }
         }]);
 })(window.angular);

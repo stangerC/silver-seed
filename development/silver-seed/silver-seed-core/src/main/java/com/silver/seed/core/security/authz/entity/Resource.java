@@ -1,4 +1,4 @@
-package com.silver.seed.core.security.authz;
+package com.silver.seed.core.security.authz.entity;
 
 /**
  *

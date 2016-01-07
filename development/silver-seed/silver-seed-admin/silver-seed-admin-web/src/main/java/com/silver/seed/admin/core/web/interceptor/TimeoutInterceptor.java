@@ -1,4 +1,4 @@
-package com.silver.seed.admin.query.web.interceptor;
+package com.silver.seed.admin.core.web.interceptor;
 
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -17,7 +17,7 @@ public class TimeoutInterceptor extends HandlerInterceptorAdapter {
         System.out.println("->silver_user:" + user);
         if(user == null) {
             request.getSession().setAttribute("silver_user", "admin");
-            //request.getRequestDispatcher("/query/display-with-jsp.jsp").forward(request, response);
+            request.getRequestDispatcher("/login").forward(request, response);
             return false;
         }
         return true;

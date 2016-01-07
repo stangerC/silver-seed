@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.silver.seed.core.security.authc;
+package com.silver.seed.core.security.authc.entity;
 
 import java.io.Serializable;
 
